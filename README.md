@@ -5,7 +5,7 @@
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-blue)](https://python.org)
 [![Flask](https://img.shields.io/badge/Flask-3.x-green)](https://flask.palletsprojects.com)
 [![Twilio](https://img.shields.io/badge/Twilio-WhatsApp-red)](https://twilio.com)
-[![Gemini](https://img.shields.io/badge/Gemini-2.0--flash-orange)](https://deepmind.google/technologies/gemini/)
+[![Gemini](https://img.shields.io/badge/Gemini-3.x-flash-orange)](https://deepmind.google/technologies/gemini/)
 [![ChromaDB](https://img.shields.io/badge/ChromaDB-Vector%20Store-purple)](https://www.trychroma.com)
 [![IBM Bob](https://img.shields.io/badge/IBM%20Bob-SDLC%20Partner-0062ff)](https://ibm.com)
 
@@ -28,7 +28,7 @@ WhatsApp User
 │                          app.py  (Flask)                            │
 │                                                                     │
 │  1. Audio? ──► safety_voice.download_audio()                        │
-│               safety_voice.transcribe_audio()  [OpenAI Whisper]    │
+│               safety_voice.transcribe_audio()  [Google Gemini STT]  │
 │                                                                     │
 │  2. ┌─── safety_voice.check_emergency()  ← ALWAYS FIRST             │
 │     │    (deterministic keyword matching, NO LLM)                  │
@@ -44,7 +44,7 @@ WhatsApp User
 │       ├─► ChromaDB query  (./chroma_db)                            │
 │       │   health_facts.json (8 verified records)                   │
 │       │                                                             │
-│       └─► Google Gemini API (gemini-2.0-flash)                     │
+│       └─► Google Gemini API (gemini-3.6-flash)                     │
 │           └─► empathetic reply in target language                  │
 │                                                                     │
 │  5. database.log_query()  [SQLite, anonymised hash]                │
@@ -84,8 +84,8 @@ WhatsApp User
 | Messaging channel | Twilio WhatsApp Business API |
 | Web framework | Flask 3.x |
 | RAG vector store | ChromaDB (persistent local) |
-| LLM | Google Gemini 2.0 Flash (`google-genai`) |
-| Voice transcription | OpenAI Whisper (`whisper-1`) |
+| LLM | Google Gemini 3.6 Flash (`google-genai`) |
+| Voice transcription | Google Gemini speech-to-text (`google-genai`) |
 | Safety layer | Deterministic Python keyword circuit breaker |
 | Persistence | SQLite3 (stdlib — no ORM) |
 | Analytics UI | Streamlit + Plotly |
@@ -101,9 +101,8 @@ WhatsApp User
 ### Prerequisites
 - Python 3.11 or higher
 - A [Twilio account](https://twilio.com) with WhatsApp sandbox enabled
-- [Google AI Studio](https://aistudio.google.com) API key (Gemini)
-- [OpenAI](https://platform.openai.com) API key (Whisper)
-- [ngrok](https://ngrok.com) (free tier is fine) to expose localhost during development
+- [Google AI Studio](https://aistudio.google.com) API key (Gemini, used for both chat and voice transcription)
+- A tunnel tool such as [cloudflared](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/) (the project ships a local `cloudflared` binary) or ngrok to expose localhost during development
 
 ---
 
@@ -133,7 +132,6 @@ cp .env.example .env
 #   TWILIO_ACCOUNT_SID
 #   TWILIO_AUTH_TOKEN
 #   GEMINI_API_KEY
-#   OPENAI_API_KEY
 #   DASHBOARD_PASSWORD   (any string you choose)
 ```
 
@@ -171,19 +169,20 @@ streamlit run dashboard.py
 # Enter the DASHBOARD_PASSWORD you set in .env
 ```
 
-### Step 7 — Expose webhook via ngrok for Twilio sandbox
+### Step 7 — Expose webhook via cloudflared for Twilio sandbox
 
-Open a **third terminal**:
+Open a **third terminal** and make sure the project-local `cloudflared` binary is executable:
 
 ```bash
-ngrok http 5000
+chmod +x cloudflared
+./cloudflared tunnel --url http://localhost:5000
 ```
 
-Copy the `https://xxxx.ngrok-free.app` URL, then:
+`cloudflared` prints a public `https://...trycloudflare.com` URL. Copy that URL, then:
 
 1. Go to [Twilio Console → Messaging → WhatsApp Sandbox](https://console.twilio.com/us1/develop/sms/try-it-out/whatsapp-learn)
 2. Set the **"When a message comes in"** webhook URL to:
-   `https://xxxx.ngrok-free.app/webhook`
+   `https://<your-random>.trycloudflare.com/webhook`
 3. Method: `HTTP POST`
 4. Save.
 
@@ -218,7 +217,7 @@ Send these messages from your WhatsApp to the sandbox number in order:
 health-myth-bot/
 ├── app.py              Flask webhook + request orchestration
 ├── rag_engine.py       ChromaDB vector store + Gemini rebuttal
-├── safety_voice.py     Emergency circuit breaker + Whisper transcription
+├── safety_voice.py     Emergency circuit breaker + Gemini STT
 ├── database.py         SQLite schema + all DB functions
 ├── dashboard.py        Streamlit analytics dashboard
 ├── seed_data.py        30-row realistic seed data script
@@ -226,7 +225,8 @@ health-myth-bot/
 ├── alerting.py         Rumour spike detection (stretch goal 4.4)
 ├── health_facts.json   8 verified myth/fact records (WHO / MoH sourced)
 ├── static/
-│   └── index.html      Self-contained landing page for judges
+│   ├── index.html     Self-contained landing page for the bot (mirror of dashboard styling)
+│   └── cards/        Generated myth-fact card PNGs (stretch goal 4.6)
 ├── requirements.txt
 ├── .env.example
 ├── README.md
@@ -241,7 +241,7 @@ health-myth-bot/
 |---|---|---|
 | 4.1 | Feedback loop (👍/👎) | ✅ Fully implemented |
 | 4.2 | Auto-detect language | ✅ langdetect, 3-word threshold |
-| 4.3 | WhatsApp quick-reply buttons | ✅ SUPPORTS_INTERACTIVE_MESSAGES flag |
+| 4.3 | WhatsApp quick-reply buttons | ⚠️ Flag documented in `.env.example`; interactive-message API not implemented in the demo |
 | 4.4 | Proactive rumour-spike alerting | ✅ alerting.detect_rumor_spike() |
 | 4.5 | Report a new myth intake | ✅ flagged_myths table + dashboard queue |
 | 4.6 | Shareable myth-fact card image | ✅ card_generator.py (Pillow) |
@@ -260,11 +260,11 @@ health-myth-bot/
 
 4. **`CARD_BASE_URL` must be set for media cards to attach.** The `generate_myth_card()` function writes PNG files to `./static/cards/`. These must be served from a publicly accessible URL and set via the `CARD_BASE_URL` env var — otherwise the card attachment is silently skipped.
 
-5. **Whisper transcription costs money.** Every voice note incurs an OpenAI API cost. The current implementation has no rate-limiting or per-user quotas.
+5. **Gemini transcription costs money.** Every voice note incurs a Google Gemini API cost. The current implementation has no rate-limiting or per-user quotas.
 
 6. **`langdetect` is non-deterministic by default.** We seed `DetectorFactory.seed = 42` for reproducibility, but detection accuracy is limited on short messages — this is why messages under 3 words fall back to the stored language or the manual menu.
 
-7. **No webhook signature validation.** In production, validate Twilio's `X-Twilio-Signature` header on every request to prevent spoofed webhooks.
+7. **No webhook signature validation.** In production, validate Twilio's `X-Twilio-Webhook-SignatureV2` header on every request (using your `TWILIO_AUTH_TOKEN`) to prevent spoofed webhooks.
 
 8. **The `SUPPORTS_INTERACTIVE_MESSAGES` flag is documented but the full interactive-message Twilio API is not exercised in the demo.** This requires a WhatsApp Business API account (not sandbox).
 
