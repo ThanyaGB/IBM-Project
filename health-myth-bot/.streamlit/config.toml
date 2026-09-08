@@ -1,0 +1,11 @@
+[theme]
+# Minimal dark theme for the dashboard (muted accents)
+base = "dark"
+primaryColor = "#6b93c9"
+backgroundColor = "#0e1116"
+secondaryBackgroundColor = "#161b24"
+textColor = "#dde2ec"
+font = "sans serif"
+
+[browser]
+gatherUsageStats = false

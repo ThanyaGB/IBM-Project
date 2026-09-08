@@ -7,6 +7,7 @@ Run with:
 Features
 --------
 - Password gate (DASHBOARD_PASSWORD env var) before any data is shown.
+- Minimal dark theme (paired with .streamlit/config.toml).
 - Auto-refresh every 30 seconds.
 - Summary metric cards (total queries, active languages, emergency flags, helpfulness rate).
 - Plotly pie chart: query volume by language.
@@ -45,17 +46,20 @@ st.set_page_config(
 )
 
 # ---------------------------------------------------------------------------
-# Color palette (mirrors static/index.html)
+# Dark color palette (mirrors .streamlit/config.toml)
 # ---------------------------------------------------------------------------
-TEAL = "#1a7f7a"
-DEEP_BLUE = "#1a3a5c"
-OFF_WHITE = "#f5f7f9"
-BORDER = "#d0d7de"
-EMERGENCY_RED = "#c0392b"
-ACCENT_AMBER = "#e67e22"
-TEXT_DARK = "#1f2328"
-TEXT_MUTED = "#57606a"
-CHART_COLORS = [TEAL, DEEP_BLUE, "#2980b9", "#16a085", "#8e44ad", "#27ae60", ACCENT_AMBER]
+ACCENT_BLUE = "#6b93c9"         # primary accent (soft light blue)
+DEEP_BLUE = "#dde2ec"           # heading / emphasis text (light on dark)
+OFF_WHITE = "#0e1116"           # page background (deep charcoal)
+BORDER = "#282f3d"              # hairline borders / gridlines
+EMERGENCY_RED = "#e08585"
+ACCENT_AMBER = "#d9a659"
+TEXT_DARK = "#dde2ec"           # main text (light on dark)
+TEXT_MUTED = "#8b93a7"          # secondary text
+SUCCESS_GREEN = "#6fbf9c"
+CARD_BG = "#161b24"             # raised card surface
+CHART_COLORS = ["#6b93c9", "#9a8cc9", "#6fbf9c", "#c98ca8", "#d9a659", "#e08585"]
+PLOT_FONT = "-apple-system, Segoe UI, system-ui, Arial, sans-serif"
 
 # ---------------------------------------------------------------------------
 # Custom CSS injection
@@ -63,88 +67,127 @@ CHART_COLORS = [TEAL, DEEP_BLUE, "#2980b9", "#16a085", "#8e44ad", "#27ae60", ACC
 CUSTOM_CSS = f"""
 <style>
     /* ── Global ── */
-    html, body, [class*="css"] {{
+    html, body, [class*="css"], .stApp {{
         font-family: -apple-system, "Segoe UI", system-ui, Arial, sans-serif;
-        font-size: 15px;
-        color: {TEXT_DARK};
+        color: {TEXT_DARK} !important;
     }}
     .stApp {{
         background-color: {OFF_WHITE};
     }}
+    h1, h2, h3, h4, h5, h6, p, span, label, div {{
+        color: inherit;
+    }}
+    /* Force legible text on Streamlit's own widgets in dark mode */
+    .stApp, .stApp * {{
+        scrollbar-color: {BORDER} transparent;
+    }}
+    .stMarkdown, .stMarkdown * {{
+        color: {TEXT_DARK};
+    }}
+    label, .stTextInput label, .stMultiSelect label, .stToggle label {{
+        color: {TEXT_MUTED} !important;
+        font-size: 13px;
+        font-weight: 500;
+    }}
+    .stTextInput input {{
+        background-color: {CARD_BG} !important;
+        color: {TEXT_DARK} !important;
+        border: 1px solid {BORDER} !important;
+        border-radius: 8px;
+    }}
+    .stTextInput input::placeholder {{
+        color: {TEXT_MUTED} !important;
+    }}
+    /* ── Filter tags: light blue with dark text for contrast ── */
+    [data-testid="stMultiSelectTagsContainer"] span[data-tag] {{
+        background-color: #8fb3e0 !important;
+        border-radius: 6px;
+    }}
+    [data-testid="stMultiSelectTagsContainer"] span[data-tag],
+    [data-testid="stMultiSelectTagsContainer"] span[data-tag] span,
+    [data-testid="stMultiSelectTagsContainer"] span[data-tag] svg {{
+        color: #10141c !important;
+    }}
+    /* Primary buttons: dark text on the light-blue accent */
+    section.stMain button[kind="primary"] {{
+        color: #0f131a !important;
+    }}
     /* ── Metric cards ── */
     .metric-card {{
-        background: #ffffff;
-        border-radius: 8px;
-        padding: 20px 24px 18px;
-        box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-        border-top: 4px solid {TEAL};
+        background: {CARD_BG};
+        border: 1px solid {BORDER};
+        border-radius: 12px;
+        padding: 20px 22px 18px;
         height: 100%;
     }}
-    .metric-card.emergency {{
-        border-top-color: {EMERGENCY_RED};
-    }}
-    .metric-card.helpfulness {{
-        border-top-color: #27ae60;
-    }}
     .metric-card .metric-label {{
-        font-size: 12px;
+        font-size: 11px;
         font-weight: 600;
         text-transform: uppercase;
-        letter-spacing: 0.05em;
+        letter-spacing: 0.08em;
         color: {TEXT_MUTED};
-        margin-bottom: 6px;
+        margin-bottom: 8px;
     }}
     .metric-card .metric-value {{
-        font-size: 36px;
+        font-size: 34px;
         font-weight: 700;
         line-height: 1.1;
-        color: {DEEP_BLUE};
-    }}
-    .metric-card.emergency .metric-value {{
-        color: {EMERGENCY_RED};
-    }}
-    .metric-card.helpfulness .metric-value {{
-        color: #27ae60;
+        color: {TEXT_DARK};
     }}
     .metric-card .metric-sub {{
         font-size: 12px;
         color: {TEXT_MUTED};
-        margin-top: 4px;
+        margin-top: 6px;
     }}
+    .metric-accent {{
+        display: inline-block;
+        width: 26px;
+        height: 3px;
+        border-radius: 2px;
+        margin-bottom: 12px;
+        background: {ACCENT_BLUE};
+    }}
+    .metric-card.emergency .metric-accent {{ background: {EMERGENCY_RED}; }}
+    .metric-card.emergency .metric-value {{ color: {EMERGENCY_RED}; }}
+    .metric-card.helpfulness .metric-accent {{ background: {SUCCESS_GREEN}; }}
+    .metric-card.helpfulness .metric-value {{ color: {SUCCESS_GREEN}; }}
     /* ── Section headers ── */
     .section-header {{
-        font-size: 18px;
+        font-size: 15px;
         font-weight: 700;
-        color: {DEEP_BLUE};
-        margin: 28px 0 12px;
-        padding-bottom: 6px;
-        border-bottom: 2px solid {BORDER};
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: {TEXT_MUTED};
+        margin: 30px 0 14px;
     }}
     /* ── Alert banner ── */
     .rumor-alert {{
-        background: #fff3cd;
-        border: 1.5px solid {ACCENT_AMBER};
-        border-left: 6px solid {ACCENT_AMBER};
-        border-radius: 6px;
+        background: rgba(217, 166, 89, 0.07);
+        border: 1px solid rgba(217, 166, 89, 0.3);
+        border-left: 4px solid {ACCENT_AMBER};
+        border-radius: 10px;
         padding: 14px 18px;
         margin-bottom: 20px;
     }}
     .rumor-alert h4 {{
         margin: 0 0 6px;
-        color: #7d5600;
+        color: {ACCENT_AMBER};
         font-size: 15px;
     }}
     .rumor-alert p {{
         margin: 0;
-        color: #7d5600;
+        color: {TEXT_MUTED};
         font-size: 13px;
+    }}
+    .rumor-alert p b, .rumor-alert strong {{
+        color: {TEXT_DARK};
     }}
     /* ── Live indicator ── */
     .live-dot {{
         display: inline-block;
-        width: 9px;
-        height: 9px;
-        background: #27ae60;
+        width: 8px;
+        height: 8px;
+        background: {SUCCESS_GREEN};
         border-radius: 50%;
         margin-right: 5px;
         vertical-align: middle;
@@ -158,12 +201,6 @@ CUSTOM_CSS = f"""
         margin-top: 40px;
         text-align: center;
     }}
-    /* ── Dataframe tweaks ── */
-    .dataframe thead th {{
-        background: {DEEP_BLUE} !important;
-        color: white !important;
-        font-size: 13px;
-    }}
     /* Hide Streamlit branding ── */
     #MainMenu, footer, header {{visibility: hidden;}}
 </style>
@@ -172,9 +209,53 @@ st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
 
 # ---------------------------------------------------------------------------
-# Password gate (stretch goal 4.7)
+# Login screen (stretch goal 4.7)
 # ---------------------------------------------------------------------------
 DASHBOARD_PASSWORD = os.environ.get("DASHBOARD_PASSWORD", "")
+
+_LOGIN_CSS = f"""
+<style>
+    /* Fixed-width login card. Streamlit renders forms as div[data-testid="stForm"]
+       (never a nested <form>), so style that element directly. */
+    section.stMain div[data-testid="stForm"] {{
+        width: 340px;              /* fixed-length card, not screen-wide */
+        max-width: 90vw;
+        box-sizing: border-box;
+        margin: 0 auto;            /* centre within the block container */
+        padding: 22px 22px 16px;
+        background: {CARD_BG};
+        border: 1px solid {BORDER};
+        border-radius: 14px;
+    }}
+    .login-head {{
+        text-align: center;
+        margin: 0 0 4px;
+    }}
+    .login-logo {{
+        font-size: 32px;
+        line-height: 1;
+    }}
+    .login-title {{
+        font-size: 19px;
+        font-weight: 700;
+        color: {TEXT_DARK};
+        margin: 10px 0 4px;
+    }}
+    .login-sub {{
+        font-size: 13px;
+        color: {TEXT_MUTED};
+        margin: 0;
+    }}
+    .login-hint {{
+        font-size: 11.5px;
+        color: {TEXT_MUTED};
+        text-align: center;
+        width: 340px;
+        max-width: 90vw;
+        margin: 14px auto 0;
+    }}
+</style>
+"""
 
 
 def _check_auth() -> bool:
@@ -182,22 +263,35 @@ def _check_auth() -> bool:
         return True  # no password configured — open access
     if st.session_state.get("authenticated"):
         return True
+
+    st.markdown(_LOGIN_CSS, unsafe_allow_html=True)
     st.markdown(
-        "<div style='max-width:380px;margin:80px auto;padding:36px;"
-        f"background:#fff;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,0.1);"
-        f"border-top:5px solid {TEAL};'>"
-        f"<h3 style='color:{DEEP_BLUE};margin-bottom:4px;'>🏥 Health Myth-Bot</h3>"
-        f"<p style='color:{TEXT_MUTED};font-size:13px;margin-bottom:20px;'>Public Health Analytics — Authorised Access Only</p>"
+        f"<div class='login-head'>"
+        f"<div class='login-logo'>🏥</div>"
+        f"<div class='login-title'>Health Myth-Bot</div>"
+        f"<div class='login-sub'>Public Health Analytics</div>"
         "</div>",
         unsafe_allow_html=True,
     )
-    pwd = st.text_input("Password", type="password", placeholder="Enter dashboard password")
-    if st.button("Sign in", type="primary"):
-        if pwd == DASHBOARD_PASSWORD:
-            st.session_state["authenticated"] = True
-            st.rerun()
-        else:
-            st.error("Incorrect password. Please try again.")
+    with st.form("login_form", clear_on_submit=False):
+        pwd = st.text_input(
+            "Password",
+            type="password",
+            placeholder="Enter dashboard password",
+            label_visibility="collapsed",
+        )
+        submitted = st.form_submit_button("Sign in", width="stretch")
+        if submitted:
+            if pwd == DASHBOARD_PASSWORD:
+                st.session_state["authenticated"] = True
+                st.rerun()
+            else:
+                st.error("Incorrect password. Please try again.")
+    st.markdown(
+        "<div class='login-hint'>Authorised public health officials only · "
+        "Access is logged</div>",
+        unsafe_allow_html=True,
+    )
     return False
 
 
@@ -265,8 +359,8 @@ def render_dashboard():
     col_title, col_live = st.columns([8, 2])
     with col_title:
         st.markdown(
-            f"<h1 style='color:{DEEP_BLUE};margin-bottom:2px;'>🏥 Health Myth-Bot</h1>"
-            f"<p style='color:{TEXT_MUTED};font-size:15px;margin-top:0;'>"
+            f"<h1 style='color:{TEXT_DARK};margin-bottom:2px;font-size:28px;'>🏥 Health Myth-Bot</h1>"
+            f"<p style='color:{TEXT_MUTED};font-size:14px;margin-top:0;'>"
             "Real-time multilingual health myth monitoring</p>",
             unsafe_allow_html=True,
         )
@@ -275,7 +369,7 @@ def render_dashboard():
         st.markdown(
             f"<div style='text-align:right;padding-top:18px;'>"
             f"<span class='live-dot'></span>"
-            f"<span style='color:#27ae60;font-size:13px;font-weight:600;'>LIVE</span>"
+            f"<span style='color:{SUCCESS_GREEN};font-size:12px;font-weight:600;'>LIVE</span>"
             f"<br><span style='color:{TEXT_MUTED};font-size:11px;'>Updated {now_str}</span>"
             "</div>",
             unsafe_allow_html=True,
@@ -315,6 +409,7 @@ def render_dashboard():
     with c1:
         st.markdown(
             f"<div class='metric-card'>"
+            f"<span class='metric-accent'></span>"
             f"<div class='metric-label'>Total Queries</div>"
             f"<div class='metric-value'>{stats['total_queries']:,}</div>"
             f"<div class='metric-sub'>All time</div>"
@@ -324,6 +419,7 @@ def render_dashboard():
     with c2:
         st.markdown(
             f"<div class='metric-card'>"
+            f"<span class='metric-accent'></span>"
             f"<div class='metric-label'>Active Languages</div>"
             f"<div class='metric-value'>{stats['active_languages']}</div>"
             f"<div class='metric-sub'>Unique language codes seen</div>"
@@ -333,6 +429,7 @@ def render_dashboard():
     with c3:
         st.markdown(
             f"<div class='metric-card emergency'>"
+            f"<span class='metric-accent'></span>"
             f"<div class='metric-label'>Emergency Flags</div>"
             f"<div class='metric-value'>{stats['emergency_count']}</div>"
             f"<div class='metric-sub'>Queries routed to emergency services</div>"
@@ -342,6 +439,7 @@ def render_dashboard():
     with c4:
         st.markdown(
             f"<div class='metric-card helpfulness'>"
+            f"<span class='metric-accent'></span>"
             f"<div class='metric-label'>Helpfulness Rate</div>"
             f"<div class='metric-value'>{helpfulness_display}</div>"
             f"<div class='metric-sub'>👍 feedback / total feedback</div>"
@@ -373,19 +471,26 @@ def render_dashboard():
                 values="Queries",
                 title="Query Volume by Language",
                 color_discrete_sequence=CHART_COLORS,
-                hole=0.35,
+                hole=0.4,
             )
-            fig_pie.update_traces(textposition="inside", textinfo="percent+label")
+            fig_pie.update_traces(
+                textposition="inside",
+                textinfo="percent+label",
+                textfont_color="#0f131a",
+                marker_line_color=CARD_BG,
+                marker_line_width=2,
+            )
             fig_pie.update_layout(
                 paper_bgcolor="rgba(0,0,0,0)",
                 plot_bgcolor="rgba(0,0,0,0)",
-                font=dict(family="-apple-system, Segoe UI, Arial, sans-serif", size=13),
-                title_font_color=DEEP_BLUE,
+                font=dict(family=PLOT_FONT, size=13, color=TEXT_DARK),
+                title_font_color=TEXT_DARK,
+                hoverlabel=dict(font_color=TEXT_DARK, bgcolor=CARD_BG),
                 showlegend=True,
-                legend=dict(orientation="h", yanchor="bottom", y=-0.2),
+                legend=dict(orientation="h", yanchor="bottom", y=-0.15),
                 margin=dict(t=50, b=20, l=10, r=10),
             )
-            st.plotly_chart(fig_pie, use_container_width=True)
+            st.plotly_chart(fig_pie, width="stretch")
 
         with ch2:
             cat_counts = (
@@ -396,7 +501,7 @@ def render_dashboard():
                 .sort_values("Queries", ascending=True)
             )
             # Emphasise the top category
-            bar_colors = [ACCENT_AMBER if i == len(cat_counts) - 1 else TEAL
+            bar_colors = [ACCENT_AMBER if i == len(cat_counts) - 1 else ACCENT_BLUE
                           for i in range(len(cat_counts))]
             fig_bar = go.Figure(
                 go.Bar(
@@ -411,13 +516,14 @@ def render_dashboard():
                 title="Trending Rumors & Myths by Category",
                 paper_bgcolor="rgba(0,0,0,0)",
                 plot_bgcolor="rgba(0,0,0,0)",
-                font=dict(family="-apple-system, Segoe UI, Arial, sans-serif", size=13),
-                title_font_color=DEEP_BLUE,
-                xaxis=dict(title="Number of Queries", gridcolor=BORDER),
+                font=dict(family=PLOT_FONT, size=13, color=TEXT_DARK),
+                title_font_color=TEXT_DARK,
+                hoverlabel=dict(font_color=TEXT_DARK, bgcolor=CARD_BG),
+                xaxis=dict(title="Number of Queries", gridcolor=BORDER, zerolinecolor=BORDER),
                 yaxis=dict(title=""),
                 margin=dict(t=50, b=20, l=10, r=10),
             )
-            st.plotly_chart(fig_bar, use_container_width=True)
+            st.plotly_chart(fig_bar, width="stretch")
 
     # ── Filters ──────────────────────────────────────────────────────────────
     st.markdown("<div class='section-header'>Recent Queries</div>", unsafe_allow_html=True)
@@ -472,7 +578,7 @@ def render_dashboard():
         }
         st.dataframe(
             display_df.rename(columns=display_cols)[list(display_cols.values())],
-            use_container_width=True,
+            width="stretch",
             height=380,
         )
 
@@ -516,7 +622,7 @@ def render_dashboard():
                     "language": "Language", "status": "Status",
                 }
             ),
-            use_container_width=True,
+            width="stretch",
             height=220,
         )
 
@@ -543,7 +649,7 @@ def _generate_pdf_report(stats: dict, df: pd.DataFrame, spikes: list) -> bytes:
         pdf = FPDF()
         pdf.add_page()
         pdf.set_font("Helvetica", "B", 18)
-        pdf.set_text_color(26, 58, 92)  # DEEP_BLUE
+        pdf.set_text_color(26, 58, 92)  # deep blue — print-friendly (white PDF page)
         pdf.cell(0, 12, "Health Myth-Bot — Weekly Summary Report", ln=True)
 
         pdf.set_font("Helvetica", "", 10)
@@ -626,9 +732,13 @@ def _generate_pdf_report(stats: dict, df: pd.DataFrame, spikes: list) -> bytes:
 
 
 # ---------------------------------------------------------------------------
-# Auto-refresh loop
+# Auto-refresh (same-session rerun so login state survives; disable with
+# DASHBOARD_REFRESH_SECS=0 e.g. for automated tests)
 # ---------------------------------------------------------------------------
 
 render_dashboard()
-time.sleep(30)
-st.rerun()
+
+REFRESH_SECS = int(os.environ.get("DASHBOARD_REFRESH_SECS", "30"))
+if REFRESH_SECS > 0:
+    time.sleep(REFRESH_SECS)
+    st.rerun()
