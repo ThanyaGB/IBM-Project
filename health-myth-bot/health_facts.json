@@ -1,0 +1,66 @@
+[
+  {
+    "id": 1,
+    "topic": "MMR Vaccine",
+    "common_myth": "The MMR vaccine causes autism in children.",
+    "verified_fact": "The MMR (measles, mumps, rubella) vaccine does not cause autism. This claim originated from a 1998 study that has since been fully retracted due to serious ethical violations and data manipulation. Dozens of large-scale studies involving millions of children across multiple countries have found no link between the MMR vaccine and autism. The World Health Organization (WHO) and health authorities worldwide confirm that the MMR vaccine is safe and essential for protecting children against three serious, potentially life-threatening diseases.",
+    "source": "WHO Vaccine Safety Advisory Committee; CDC Vaccine Safety Datalink",
+    "category": "Vaccines"
+  },
+  {
+    "id": 2,
+    "topic": "Polio Drops (OPV)",
+    "common_myth": "Oral polio vaccine (OPV) drops can cause polio or make children infertile.",
+    "verified_fact": "The oral polio vaccine (OPV) does not cause polio or infertility. OPV contains a weakened live virus that stimulates the immune system without causing disease in the vast majority of children. In extremely rare cases (approximately 1 in 2.7 million first doses), vaccine-associated paralytic polio can occur, but this risk is far lower than the risk of paralysis from wild poliovirus. There is no scientific evidence that OPV affects fertility. The Global Polio Eradication Initiative, supported by WHO and UNICEF, credits OPV with reducing global polio cases by over 99% since 1988.",
+    "source": "WHO Global Polio Eradication Initiative; UNICEF Immunization Programme",
+    "category": "Vaccines"
+  },
+  {
+    "id": 3,
+    "topic": "Tetanus Toxoid in Pregnancy",
+    "common_myth": "The tetanus toxoid (TT) injection given during pregnancy causes miscarriage or is a secret sterilisation agent.",
+    "verified_fact": "The tetanus toxoid (TT) vaccine given during pregnancy is safe and protects both the mother and her newborn from tetanus infection, which can be fatal. It does not cause miscarriage, infertility, or sterilisation. Maternal and neonatal tetanus remains a preventable cause of death in many low- and middle-income countries. WHO recommends at least two doses of TT for all pregnant women who have not been previously protected. The vaccine has been in routine use for decades and has saved hundreds of thousands of newborn lives.",
+    "source": "WHO Maternal and Neonatal Tetanus Elimination Initiative; Ministry of Health Immunization Guidelines",
+    "category": "Maternal Health"
+  },
+  {
+    "id": 4,
+    "topic": "Maternal Nutrition",
+    "common_myth": "A pregnant woman should eat for two and avoid many foods such as eggs, papaya, and cold water to protect the baby.",
+    "verified_fact": "During pregnancy, a woman needs additional nutrients but does not need to double her calorie intake. WHO and national nutrition guidelines recommend a balanced diet rich in iron, folic acid, calcium, and protein. Eggs are safe and nutritious during pregnancy and provide important protein and choline for fetal brain development. Ripe papaya is safe to eat; unripe papaya contains latex which should be avoided in large quantities. Drinking safe, clean water at any temperature is not harmful to the pregnancy. Restricting nutritious foods can lead to maternal anaemia, low birth weight, and poor fetal development.",
+    "source": "WHO Nutrition Guidance for Pregnant Women; National Nutrition Programme Guidelines",
+    "category": "Maternal Health"
+  },
+  {
+    "id": 5,
+    "topic": "Fever Management",
+    "common_myth": "You should wrap a child in blankets to 'sweat out' a fever, and never give them water or medicine.",
+    "verified_fact": "Wrapping a feverish child in heavy blankets traps heat and can dangerously raise body temperature, increasing the risk of febrile convulsions. WHO and paediatric guidelines recommend keeping a feverish child lightly clothed in a cool, well-ventilated room, offering frequent sips of clean water or oral rehydration solution (ORS) to prevent dehydration, and using a recommended antipyretic such as paracetamol (acetaminophen) at the correct weight-based dose to reduce discomfort. If fever is above 39°C (102.2°F), persists beyond two days, or is accompanied by difficulty breathing, a rash, stiff neck, or severe headache, the child should be taken to a health facility immediately.",
+    "source": "WHO Integrated Management of Childhood Illness (IMCI); Paediatric Society Fever Management Guidelines",
+    "category": "Child Health"
+  },
+  {
+    "id": 6,
+    "topic": "Antibiotic Misuse",
+    "common_myth": "Antibiotics can cure the common cold, flu, and other viral infections, and it is fine to stop taking them early once you feel better.",
+    "verified_fact": "Antibiotics are effective only against bacterial infections; they have no effect on viruses, including the viruses that cause the common cold, influenza, and most sore throats. Taking antibiotics for viral illnesses exposes patients to side effects without benefit and contributes to antimicrobial resistance (AMR), which WHO identifies as one of the greatest global public health threats. When a doctor does prescribe antibiotics for a confirmed bacterial infection, patients must complete the full prescribed course even if they feel better, because stopping early can leave surviving bacteria that may develop resistance. Always use antibiotics only as prescribed by a qualified health worker.",
+    "source": "WHO Global Action Plan on Antimicrobial Resistance; National AMR Awareness Programme",
+    "category": "Medication"
+  },
+  {
+    "id": 7,
+    "topic": "COVID-19 Vaccine",
+    "common_myth": "COVID-19 vaccines alter your DNA or contain microchips to track people.",
+    "verified_fact": "COVID-19 vaccines do not alter human DNA and do not contain microchips, trackers, or any surveillance technology. mRNA vaccines (such as Pfizer-BioNTech and Moderna) deliver temporary genetic instructions that teach immune cells to recognise the SARS-CoV-2 spike protein; mRNA breaks down within days and never enters the cell nucleus where DNA is stored. Viral vector vaccines (such as AstraZeneca) use a harmless carrier virus and also do not interact with human DNA. All COVID-19 vaccines approved under WHO Emergency Use Listing have undergone rigorous safety and efficacy trials.",
+    "source": "WHO COVID-19 Vaccine Explainer; US FDA Vaccine Authorization Fact Sheets",
+    "category": "Vaccines"
+  },
+  {
+    "id": 8,
+    "topic": "Breastfeeding and HIV",
+    "common_myth": "A mother who is HIV-positive must never breastfeed her baby.",
+    "verified_fact": "For mothers living with HIV who have access to antiretroviral therapy (ART), WHO recommends exclusive breastfeeding for the first six months, as the protective benefits of breastfeeding — including prevention of diarrhoea, pneumonia, and malnutrition — outweigh the risk of HIV transmission when the mother is on effective ART and has an undetectable viral load. Mothers on ART with sustained viral suppression have a very low risk of transmitting HIV through breastfeeding. Decisions should be made in consultation with a qualified health worker, taking into account the availability of ART and safe drinking water.",
+    "source": "WHO HIV and Infant Feeding Guidelines 2023",
+    "category": "Maternal Health"
+  }
+]
