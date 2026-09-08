@@ -20,7 +20,7 @@ COLLECTION_NAME = "health_facts"
 SIMILARITY_THRESHOLD = 1.4
 TOP_K = 3
 
-GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.0-flash")
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.6-flash")
 LANGDETECT_MIN_WORDS = 3
 
 _LANG_NAMES = {"en": "English", "hi": "Hindi", "sw": "Swahili"}
@@ -167,10 +167,8 @@ Write your response now:"""
         from google import genai  # noqa: PLC0415
 
         client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
-        response = client.models.generate_content(
-            model=GEMINI_MODEL,
-            contents=prompt,
-        )
+        chat = client.chats.create(model=GEMINI_MODEL)
+        response = client.models.generate_content(model=GEMINI_MODEL, contents=prompt)
         rebuttal_text = response.text.strip()
     except Exception as exc:  # pylint: disable=broad-except
         logger.error("Gemini API call failed: %s", exc)

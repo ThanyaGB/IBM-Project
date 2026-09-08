@@ -39,6 +39,80 @@ TWILIO_ACCOUNT_SID = os.environ["TWILIO_ACCOUNT_SID"]
 TWILIO_AUTH_TOKEN = os.environ["TWILIO_AUTH_TOKEN"]
 FLASK_PORT = int(os.environ.get("FLASK_PORT", 5000))
 
+_TWILIO_API_BASE = "https://api.twilio.com/2010-04-01"
+
+def _verify_twilio_credentials() -> None:
+    """Soft-fail credential check at startup.
+
+    A real API call is the only reliable way to catch a wrong or rotated
+    Twilio Auth Token before a voice note hits the webhook.
+    """
+    try:
+        import requests  # noqa: PLC0415
+    except ImportError:
+        logger.warning(
+            "requests not installed — skipping Twilio credential verification"
+        )
+        return
+
+    url = f"{_TWILIO_API_BASE}/Accounts/{TWILIO_ACCOUNT_SID}.json"
+    try:
+        resp = requests.get(
+            url,
+            auth=(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN),
+            timeout=10,
+        )
+        if resp.status_code == 200:
+            logger.info(
+                "Twilio credential verification passed for account %s",
+                TWILIO_ACCOUNT_SID[:6] + "XXXXXX",
+            )
+        elif resp.status_code == 401:
+            logger.error(
+                "Twilio credential verification FAILED (401): "
+                "TWILIO_ACCOUNT_SID or TWILIO_AUTH_TOKEN is wrong/rotated. "
+                "Check .env against the Twilio console."
+            )
+        else:
+            logger.error(
+                "Twilio credential verification unexpected response %d: %s",
+                resp.status_code,
+                resp.text[:200],
+            )
+    except Exception as exc:  # pylint: disable=broad-except
+        logger.error("Twilio credential verification request failed: %s", exc)
+
+
+def _verify_google_genai_key() -> None:
+    """Soft-fail check that the Gemini API key is accepted.
+
+    Uses a lightweight models.list call so a bad/expired key is caught at
+    boot rather than only when the first RAG rebuttal is generated.
+    """
+    try:
+        from google import genai  # noqa: PLC0415
+    except ImportError:
+        logger.warning(
+            "google-genai not installed — skipping Gemini credential verification"
+        )
+        return
+
+    try:
+        client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+        client.models.list()
+        logger.info("Gemini credential verification passed")
+    except Exception as exc:  # pylint: disable=broad-except
+        logger.error(
+            "Gemini credential verification FAILED: %s. "
+            "Check GEMINI_API_KEY in .env.",
+            exc,
+        )
+
+
+_verify_twilio_credentials()
+_verify_google_genai_key()
+
+
 import database  # noqa: E402
 import rag_engine  # noqa: E402
 import safety_voice  # noqa: E402

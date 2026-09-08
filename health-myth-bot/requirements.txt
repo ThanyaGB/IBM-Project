@@ -2,7 +2,6 @@ flask>=3.0.3
 twilio>=9.3.1
 
 google-genai>=1.5.0
-openai>=1.40.0
 
 chromadb>=0.5.3
 langdetect>=1.0.9

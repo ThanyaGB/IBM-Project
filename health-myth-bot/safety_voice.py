@@ -4,6 +4,9 @@ check_emergency() is pure keyword matching with zero LLM calls.
 download_audio() and transcribe_audio() wrap external I/O with soft-fail
 semantics: exceptions are caught, logged, and the caller gets an empty
 string rather than an unhandled 500.
+
+transcribe_audio() uses Google Gemini for cloud-based speech-to-text,
+requiring GEMINI_API_KEY to be set in the environment.
 """
 
 import logging
@@ -79,25 +82,56 @@ def download_audio(media_url: str, auth: tuple, dest_path: str) -> str:
 
 def transcribe_audio(audio_file_path: str) -> str:
     try:
-        import openai  # noqa: PLC0415
+        import google.genai  # noqa: PLC0415
     except ImportError:
-        logger.error("openai package not installed — cannot transcribe audio")
+        logger.error("google-genai package not installed — cannot transcribe audio")
         _safe_delete(audio_file_path)
         return ""
 
     try:
-        client = openai.OpenAI(api_key=os.environ["OPENAI_API_KEY"])
-        with open(audio_file_path, "rb") as audio_fh:
-            result = client.audio.transcriptions.create(
-                model="whisper-1",
-                file=audio_fh,
-                response_format="text",
-            )
-        transcript = result.strip() if isinstance(result, str) else str(result).strip()
-        logger.info("Whisper transcription success, length=%d chars", len(transcript))
+        api_key = os.environ.get("GEMINI_API_KEY")
+        if not api_key:
+            logger.error("GEMINI_API_KEY not set in environment")
+            _safe_delete(audio_file_path)
+            return ""
+
+        client = google.genai.Client(api_key=api_key)
+
+        # Read the audio file and convert to bytes
+        with open(audio_file_path, "rb") as f:
+            audio_bytes = f.read()
+
+        # Determine MIME type based on file extension
+        import mimetypes
+        mime_type, _ = mimetypes.guess_type(audio_file_path)
+        if mime_type is None:
+            # Default to common audio types
+            if audio_file_path.endswith(".ogg"):
+                mime_type = "audio/ogg"
+            elif audio_file_path.endswith(".mp3"):
+                mime_type = "audio/mpeg"
+            elif audio_file_path.endswith(".wav"):
+                mime_type = "audio/wav"
+            else:
+                mime_type = "audio/ogg"  # WhatsApp typically sends ogg
+
+        # Use Gemini's speech-to-text via generate_content with audio
+        # gemini-3.5-flash-lite is the fastest, most cost-effective Flash-Lite model
+        # with native multimodal (audio) support
+        model_name = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash-lite")
+        response = client.models.generate_content(
+            model=model_name,
+            contents=[
+                {"inline_data": {"mime_type": mime_type, "data": audio_bytes}},
+                {"text": "Transcribe the speech in this audio file. Provide only the transcribed text, nothing else."}
+            ],
+        )
+
+        transcript = response.text.strip() if response.text else ""
+        logger.info("Gemini transcription success, length=%d chars", len(transcript))
         return transcript
     except Exception as exc:  # pylint: disable=broad-except
-        logger.error("Whisper transcription failed: %s", exc)
+        logger.error("Gemini transcription failed: %s", exc)
         return ""
     finally:
         _safe_delete(audio_file_path)
