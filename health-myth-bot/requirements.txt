@@ -1,17 +1,52 @@
+# Core — everything below is free and required to run the bot end to end.
 flask>=3.0.3
-twilio>=9.3.1
+python-dotenv>=1.0.1
+requests>=2.32.3
 
+# Answer generation. Gemini is used on its free tier; Ollama (local, also free)
+# is the documented alternative for privacy-sensitive deployments.  Either one
+# alone is enough, and with neither the bot degrades to the localised
+# "consult your health worker" reply rather than failing to boot.
 google-genai>=1.5.0
 
-chromadb>=0.5.3
+# Optional statistical language pass. The primary detector is script- and
+# lexicon-based and needs no dependency; this only helps for long, ambiguous
+# Latin-script text.
 langdetect>=1.0.9
 
+# Card rendering fallback. The primary renderer is headless Chromium (Chrome or
+# Edge, already present on most machines), which is the only one that shapes
+# Devanagari and Kannada correctly. Pillow cannot, so it renders English only.
 Pillow>=10.4.0
-fpdf2>=2.8.1
 
+# Voice replies (default-on). edge-tts is free and needs no API key; it also
+# needs ffmpeg on PATH, because WhatsApp only accepts audio/ogg with the Opus
+# codec. Without it the bot replies in text only and /health reports
+# "voice_replies" as degraded.
+edge-tts>=6.1.0
+
+# Dashboard
 streamlit>=1.37.0
 plotly>=5.23.0
 pandas>=2.2.2
+fpdf2>=2.8.1
 
-python-dotenv>=1.0.1
-requests>=2.32.3
+# Tests and evaluation
+pytest>=8.0.0
+
+# ---------------------------------------------------------------------------
+# Optional extras. Install only the ones the deployment uses; none cost money.
+# ---------------------------------------------------------------------------
+# Legacy channel. Only needed when CHANNEL=twilio — the default channel is the
+# official WhatsApp Cloud API, which needs no SDK.
+# twilio>=9.3.1
+
+# Local multilingual embeddings. Enables dense retrieval on top of the
+# keyword/BM25 floor. One-time ~220 MB model download:
+#   python retrieval.py --download-model
+# fastembed>=0.8.0
+
+# Local speech-to-text (free, offline, no per-minute cost). Preferred over the
+# Gemini transcription path when installed. Without it, voice notes are
+# transcribed by the Gemini free tier instead.
+# faster-whisper>=1.0.0

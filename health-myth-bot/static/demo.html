@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live Demo — Health Myth-Bot</title>
+  <style>
+    /* Standalone demo screen. Dark theme, matching the landing page; the phone
+       itself keeps the light WhatsApp look on purpose. */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal:         #2fb3a9;
+      --deep-blue:    #0f1a2b;
+      --panel:        #16233a;
+      --off-white:    #0b1220;
+      --surface:      #131f33;
+      --border:       #263650;
+      --text-dark:    #e3eaf4;
+      --text-muted:   #93a3ba;
+      --emergency:    #c0392b;
+      --radius:       8px;
+      --radius-lg:    14px;
+      --shadow-sm:    0 1px 4px rgba(0,0,0,0.35);
+      --shadow:       0 4px 16px rgba(0,0,0,0.45);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, "Segoe UI", system-ui, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--text-dark);
+      background: var(--off-white);
+      min-height: 100vh;
+    }
+
+    a { color: var(--teal); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── Nav ─────────────────────────────────────────────────────────────── */
+    nav {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+
+    .nav-logo {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-dark);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-logo span { color: var(--teal); }
+
+    .nav-links { display: flex; gap: 24px; list-style: none; }
+    .nav-links a { font-size: 14px; font-weight: 500; color: var(--text-muted); }
+    .nav-links a:hover { color: var(--teal); text-decoration: none; }
+
+    /* ── Screen header ───────────────────────────────────────────────────── */
+    .demo-head { text-align: center; padding: 52px 0 8px; }
+
+    .demo-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 10px;
+    }
+
+    .demo-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 14px;
+      line-height: 1.25;
+    }
+
+    .demo-sub {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    /* ── Layout ──────────────────────────────────────────────────────────── */
+    .demo-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 380px) minmax(0, 1fr);
+      gap: 48px;
+      align-items: center;
+      margin: 40px 0 64px;
+    }
+
+    @media (max-width: 860px) {
+      .demo-layout { grid-template-columns: 1fr; gap: 32px; }
+      .nav-links { display: none; }
+    }
+
+    /* ── Phone frame (light WhatsApp look, deliberate) ───────────────────── */
+    .phone {
+      width: 340px;
+      max-width: 100%;
+      height: 640px;
+      background: #0b141a;
+      border-radius: 36px;
+      padding: 10px;
+      box-shadow: var(--shadow);
+      border: 1px solid #2a3942;
+      display: flex;
+      flex-direction: column;
+      margin: 0 auto;
+    }
+
+    .phone-screen {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: #efeae2;
+      border-radius: 28px;
+      overflow: hidden;
+      min-height: 0;
+    }
+
+    .phone-header {
+      background: #075e54;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      flex-shrink: 0;
+    }
+
+    .phone-header .ph-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .phone-header .ph-name { font-size: 14px; font-weight: 600; line-height: 1.2; }
+    .phone-header .ph-status { font-size: 11px; color: rgba(255,255,255,0.75); }
+
+    .phone-header .ph-live {
+      margin-left: auto;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      background: rgba(37,211,102,0.25);
+      color: #7ff2a8;
+      padding: 3px 8px;
+      border-radius: 100px;
+    }
+
+    .phone-chat {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-height: 0;
+    }
+
+    .bubble {
+      max-width: 82%;
+      padding: 8px 11px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      line-height: 1.45;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      box-shadow: 0 1px 1px rgba(0,0,0,0.12);
+      animation: bubble-in 0.18s ease-out;
+    }
+
+    @keyframes bubble-in {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .bubble.bot {
+      align-self: flex-start;
+      background: #ffffff;
+      color: #111b21;
+      border-top-left-radius: 2px;
+    }
+
+    .bubble.user {
+      align-self: flex-end;
+      background: #d9fdd3;
+      color: #111b21;
+      border-top-right-radius: 2px;
+    }
+
+    .bubble .bubble-time {
+      display: block;
+      font-size: 10px;
+      color: rgba(17,27,33,0.45);
+      text-align: right;
+      margin-top: 3px;
+    }
+
+    .bubble .card-img {
+      border-radius: 8px;
+      margin: 4px 0 2px;
+      width: 100%;
+      display: block;
+      cursor: zoom-in;
+    }
+
+    .bubble-buttons {
+      align-self: flex-start;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      width: 82%;
+      margin-top: -2px;
+    }
+
+    .bubble-btn {
+      background: #ffffff;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #00a5f4;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 1px 1px rgba(0,0,0,0.12);
+      transition: background 0.12s;
+    }
+
+    .bubble-btn:hover { background: #f0f2f5; }
+    .bubble-btn:disabled { opacity: 0.45; cursor: default; }
+
+    .bubble.typing { display: flex; gap: 4px; align-items: center; padding: 12px 14px; }
+
+    .typing-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #8696a0;
+      animation: typing-bounce 1.2s infinite;
+    }
+
+    .typing-dot:nth-child(2) { animation-delay: 0.15s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.3s; }
+
+    @keyframes typing-bounce {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+      30% { transform: translateY(-4px); opacity: 1; }
+    }
+
+    .demo-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 8px 10px;
+      background: #efeae2;
+      border-top: 1px solid rgba(0,0,0,0.06);
+      flex-shrink: 0;
+    }
+
+    .chip {
+      border: 1px solid #25d366;
+      background: #ffffff;
+      color: #075e54;
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 5px 11px;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: background 0.12s;
+      white-space: nowrap;
+    }
+
+    .chip:hover { background: #e7f7ea; }
+    .chip:disabled { opacity: 0.4; cursor: default; }
+    .chip.chip-danger { border-color: #c0392b; color: #c0392b; }
+
+    .phone-composer {
+      display: flex;
+      gap: 8px;
+      padding: 8px 10px;
+      background: #f0f2f5;
+      flex-shrink: 0;
+    }
+
+    .phone-composer input {
+      flex: 1;
+      border: none;
+      border-radius: 100px;
+      padding: 10px 16px;
+      font-size: 13.5px;
+      font-family: inherit;
+      outline: none;
+      background: #ffffff;
+      color: #111b21;
+    }
+
+    .phone-send {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      background: #25d366;
+      color: white;
+      font-size: 17px;
+      cursor: pointer;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.12s;
+    }
+
+    .phone-send:hover { background: #1da851; }
+    .phone-send:disabled { opacity: 0.5; cursor: default; }
+
+    /* ── Side rail ───────────────────────────────────────────────────────── */
+    .demo-side h3 { font-size: 18px; color: var(--text-dark); margin-bottom: 10px; }
+    .demo-side p { font-size: 14.5px; color: var(--text-muted); margin-bottom: 14px; }
+
+    .demo-side ul { list-style: none; margin: 0 0 20px; }
+
+    .demo-side li {
+      font-size: 14px;
+      color: var(--text-dark);
+      padding: 7px 0 7px 30px;
+      position: relative;
+    }
+
+    .demo-side li::before {
+      content: "\2713";
+      position: absolute;
+      left: 4px;
+      top: 6px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(47,179,169,0.16);
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .demo-side li b { color: var(--teal); }
+
+    .demo-controls {
+      background: var(--deep-blue);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+    }
+
+    .demo-toggle-row { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; }
+
+    .demo-toggle-row input[type="checkbox"] {
+      margin-top: 3px;
+      width: 16px;
+      height: 16px;
+      accent-color: var(--teal);
+      cursor: pointer;
+    }
+
+    .demo-toggle-row .toggle-title {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    .demo-toggle-row .toggle-desc {
+      display: block;
+      font-size: 12.5px;
+      color: var(--text-muted);
+      margin-top: 2px;
+      line-height: 1.5;
+    }
+
+    .demo-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 28px;
+      border-radius: var(--radius);
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+      text-decoration: none;
+      border: none;
+    }
+    .btn:hover { text-decoration: none; transform: translateY(-1px); box-shadow: var(--shadow); }
+
+    .btn-primary { background: var(--teal); color: #06121f; }
+    .btn-primary:hover { background: #3cc4ba; }
+
+    .btn-outline { background: transparent; color: var(--teal); border: 2px solid var(--teal); }
+    .btn-outline:hover { background: var(--teal); color: #06121f; }
+
+    .btn-sm { padding: 9px 18px; font-size: 13.5px; }
+
+    .demo-note {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 12px;
+      line-height: 1.55;
+    }
+
+    /* ── Lightbox ────────────────────────────────────────────────────────── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(5,10,18,0.88);
+      z-index: 300;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      cursor: zoom-out;
+    }
+
+    .lightbox.open { display: flex; }
+
+    .lightbox img {
+      max-width: 100%;
+      max-height: 90vh;
+      border-radius: 10px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="container nav-inner">
+    <a class="nav-logo" href="/">🏥 Health <span>Myth-Bot</span></a>
+    <ul class="nav-links">
+      <li><a href="/">← Back to site</a></li>
+      <li><a id="demoDashboardLink" href="http://localhost:8501" target="_blank" rel="noopener">Dashboard ↗</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="demo-head">
+  <div class="container">
+    <p class="demo-eyebrow">Try it right now</p>
+    <h1 class="demo-title">Live demo — the real bot, in a phone</h1>
+    <p class="demo-sub">
+      This is not a recording. The emulator calls the same answering pipeline the
+      WhatsApp bot uses — verified retrieval, multilingual replies, myth cards and
+      the emergency safety net. Pick a question below or type your own.
+    </p>
+  </div>
+</section>
+
+<div class="container">
+  <div class="demo-layout">
+    <!-- Phone emulator (kept light: it must look like the real WhatsApp) -->
+    <div class="phone" role="region" aria-label="Phone emulator showing a WhatsApp conversation with Health Myth-Bot">
+      <div class="phone-screen">
+        <div class="phone-header">
+          <div class="ph-avatar">🏥</div>
+          <div>
+            <div class="ph-name">Health Myth-Bot</div>
+            <div class="ph-status" id="demoStatus">online</div>
+          </div>
+          <span class="ph-live">LIVE</span>
+        </div>
+        <div class="phone-chat" id="demoChat" aria-live="polite"></div>
+        <div class="demo-chips" id="demoChips"></div>
+        <div class="phone-composer">
+          <input type="text" id="demoInput" maxlength="300"
+                 placeholder="Type a health question…" autocomplete="off"
+                 aria-label="Type a health question">
+          <button class="phone-send" id="demoSend" aria-label="Send">➤</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- What you are looking at + dashboard connection -->
+    <div class="demo-side">
+      <h3>What you are looking at</h3>
+      <p>
+        Every answer is produced live by the real system: retrieval over the
+        verified corpus (WHO &amp; Ministry of Health guidance), grounded
+        generation, a shareable myth card, and 👍/👎 feedback — exactly what a
+        WhatsApp user receives.
+      </p>
+      <ul>
+        <li>Ask in <b>English, हिन्दी or ಕನ್ನಡ</b> — language is detected automatically</li>
+        <li>Answers cite their <b>verified sources</b> — never invented statistics</li>
+        <li>Try the red chip to watch the <b>emergency safety net</b> act instantly</li>
+        <li>The bot always defers to <b>real health workers</b> — that honesty is built in</li>
+      </ul>
+
+      <div class="demo-controls">
+        <label class="demo-toggle-row">
+          <input type="checkbox" id="demoMirror" checked>
+          <span>
+            <span class="toggle-title">Mirror this demo in the live dashboard</span>
+            <span class="toggle-desc">When on, this conversation appears as anonymised activity in the public-health analytics dashboard — ask a question, then open the dashboard and watch it arrive. Turn it off to explore without logging anything.</span>
+          </span>
+        </label>
+        <div class="demo-actions">
+          <a class="btn btn-primary btn-sm" id="demoDashboardLinkMain" href="http://localhost:8501" target="_blank" rel="noopener">Open live dashboard ↗</a>
+          <a class="btn btn-outline btn-sm" href="/">← Back to the site</a>
+        </div>
+        <p class="demo-note">
+          For public health officials: the dashboard shows query volumes, trending
+          rumour spikes, emergency flags and the myth review queue. It may ask for
+          the operator password. Phone numbers are never stored anywhere —
+          analytics use anonymised hashes, and demo sessions are clearly-marked
+          synthetic users.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Card lightbox (click a myth card to enlarge) ───────────────────────── -->
+<div class="lightbox" id="demoLightbox">
+  <img src="" alt="Myth card, enlarged">
+</div>
+
+<!-- ── Live demo emulator ────────────────────────────────────────────────── -->
+<script>
+  (function () {
+    var chat = document.getElementById('demoChat');
+    if (!chat) return;
+
+    var input = document.getElementById('demoInput');
+    var sendBtn = document.getElementById('demoSend');
+    var chipsBox = document.getElementById('demoChips');
+    var statusEl = document.getElementById('demoStatus');
+    var mirrorBox = document.getElementById('demoMirror');
+    var dashLink = document.getElementById('demoDashboardLinkMain');
+    var lightbox = document.getElementById('demoLightbox');
+
+    // Per-visitor demo identity: random hex, stable across reloads so the
+    // server can keep per-session state (feedback prompts, rate caps) the
+    // way it keeps per-phone state on WhatsApp.
+    var sid = 'd1e2m3o4s5e6s7s8';
+    try {
+      var stored = sessionStorage.getItem('hmbDemoSession');
+      if (stored) {
+        sid = stored;
+      } else {
+        var bytes = new Uint8Array(8);
+        (window.crypto || window.msCrypto).getRandomValues(bytes);
+        sid = Array.prototype.map.call(bytes, function (b) {
+          return ('0' + b.toString(16)).slice(-2);
+        }).join('');
+        sessionStorage.setItem('hmbDemoSession', sid);
+      }
+    } catch (e) { /* private mode etc. — fallback id still works */ }
+
+    // Preset questions — the scripted half of the hybrid demo. The Hindi and
+    // Kannada chips show automatic language detection; the red chip shows the
+    // deterministic emergency safety net acting before any AI runs.
+    var CHIPS = [
+      { label: 'Does garlic cure COVID-19?', text: 'Does garlic cure COVID-19?' },
+      { label: 'MMR vaccine & autism?', text: 'Does the MMR vaccine cause autism in children?' },
+      { label: 'Fever in my child', text: 'Should I wrap my feverish child in blankets to sweat out the fever?' },
+      { label: 'क्या अंडा दिल के लिए बुरा है?', text: 'क्या रोज़ अंडा खाना दिल के लिए बुरा है?' },
+      { label: 'ಕೋವಿಡ್ ಲಸಿಕೆ ಸುರಕ್ಷಿತವೇ?', text: 'ಕೋವಿಡ್ ಲಸಿಕೆ ಸುರಕ್ಷಿತವೇ?' },
+      { label: '🚨 Emergency demo', text: 'my child is having a seizure, what do I do', danger: true,
+        confirm: 'This sends an example emergency message ("my child is having a seizure") to show how the bot reacts instantly. Send it?' }
+    ];
+
+    var busy = false;
+
+    function now() {
+      var d = new Date();
+      return ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2);
+    }
+
+    function scroll() {
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    function addBubble(kind, text, time) {
+      var el = document.createElement('div');
+      el.className = 'bubble ' + kind;
+      el.textContent = text;
+      var t = document.createElement('span');
+      t.className = 'bubble-time';
+      t.textContent = time || now();
+      el.appendChild(t);
+      chat.appendChild(el);
+      scroll();
+      return el;
+    }
+
+    function addTyping() {
+      var el = document.createElement('div');
+      el.className = 'bubble bot typing';
+      el.id = 'demoTyping';
+      for (var i = 0; i < 3; i++) {
+        var dot = document.createElement('span');
+        dot.className = 'typing-dot';
+        el.appendChild(dot);
+      }
+      chat.appendChild(el);
+      scroll();
+    }
+
+    function removeTyping() {
+      var el = document.getElementById('demoTyping');
+      if (el) el.remove();
+    }
+
+    function addCard(url) {
+      var el = document.createElement('div');
+      el.className = 'bubble bot';
+      var img = document.createElement('img');
+      img.className = 'card-img';
+      img.src = url;
+      img.alt = 'Verified myth card';
+      img.addEventListener('click', function () {
+        lightbox.querySelector('img').src = url;
+        lightbox.classList.add('open');
+      });
+      el.appendChild(img);
+      var t = document.createElement('span');
+      t.className = 'bubble-time';
+      t.textContent = now();
+      el.appendChild(t);
+      chat.appendChild(el);
+      scroll();
+    }
+
+    function addButtons(buttons) {
+      if (!buttons || !buttons.length) return;
+      var box = document.createElement('div');
+      box.className = 'bubble-buttons';
+      buttons.forEach(function (b) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'bubble-btn';
+        btn.textContent = b.title;
+        btn.addEventListener('click', function () {
+          // One rating per reply: disable the whole group after a tap.
+          Array.prototype.forEach.call(box.children, function (c) { c.disabled = true; });
+          sendMessage(b.id, b.title);
+        });
+        box.appendChild(btn);
+      });
+      chat.appendChild(box);
+      scroll();
+    }
+
+    function setBusy(state) {
+      busy = state;
+      sendBtn.disabled = state;
+      Array.prototype.forEach.call(chipsBox.children, function (c) { c.disabled = state; });
+      statusEl.textContent = state ? 'typing…' : 'online';
+    }
+
+    function sendMessage(payloadText, displayText) {
+      if (busy || !payloadText) return;
+      setBusy(true);
+      addBubble('user', displayText || payloadText);
+      addTyping();
+
+      // Small artificial pause so the reply arrives the way a person types —
+      // the pipeline itself is real and unscripted.
+      var minDelay = 400 + Math.random() * 500;
+      var started = Date.now();
+
+      fetch('/demo/message', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: payloadText,
+          session_id: sid,
+          log_to_dashboard: mirrorBox.checked
+        })
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          var wait = Math.max(0, minDelay - (Date.now() - started));
+          setTimeout(function () {
+            removeTyping();
+            addBubble('bot', data.reply_text || '…');
+            if (data.image_url) addCard(data.image_url);
+            addButtons(data.buttons);
+            setBusy(false);
+          }, wait);
+        })
+        .catch(function () {
+          removeTyping();
+          addBubble('bot', 'Sorry — the demo could not reach the bot just now. Please try again in a moment.');
+          setBusy(false);
+        });
+    }
+
+    function buildChips() {
+      CHIPS.forEach(function (c) {
+        var chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = 'chip' + (c.danger ? ' chip-danger' : '');
+        chip.textContent = c.label;
+        chip.addEventListener('click', function () {
+          if (c.confirm && !window.confirm(c.confirm)) return;
+          sendMessage(c.text);
+        });
+        chipsBox.appendChild(chip);
+      });
+    }
+
+    function sendTyped() {
+      var text = input.value.trim();
+      if (!text) return;
+      input.value = '';
+      sendMessage(text);
+    }
+
+    sendBtn.addEventListener('click', sendTyped);
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { e.preventDefault(); sendTyped(); }
+    });
+
+    // Both dashboard buttons follow the server's config so a deployment can
+    // point them at a hosted dashboard without editing this file.
+    var navDash = document.getElementById('demoDashboardLink');
+    fetch('/demo/config')
+      .then(function (r) { return r.json(); })
+      .then(function (cfg) {
+        if (cfg && cfg.dashboard_url) {
+          dashLink.href = cfg.dashboard_url;
+          if (navDash) navDash.href = cfg.dashboard_url;
+        }
+      })
+      .catch(function () { /* keep the default hrefs */ });
+
+    lightbox.addEventListener('click', function () { lightbox.classList.remove('open'); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') lightbox.classList.remove('open');
+    });
+
+    addBubble('bot', 'Namaste! 👋 I am Health Myth-Bot. Ask me any health question in English, हिन्दी or ಕನ್ನಡ — or tap a suggestion below.');
+    buildChips();
+  })();
+</script>
+
+</body>
+</html>

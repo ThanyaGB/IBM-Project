@@ -1,0 +1,270 @@
+[
+  {
+    "id": 1,
+    "topic": "MMR Vaccine",
+    "topic_i18n": { "hi": "एमएमआर वैक्सीन", "kn": "ಎಂಎಂಆರ್ ಲಸಿಕೆ" },
+    "common_myth": "The MMR vaccine causes autism in children.",
+    "verified_fact": "The MMR (measles, mumps, rubella) vaccine does not cause autism. This claim originated from a 1998 study that has since been fully retracted due to serious ethical violations and data manipulation. Dozens of large-scale studies involving millions of children across multiple countries have found no link between the MMR vaccine and autism. The World Health Organization (WHO) and health authorities worldwide confirm that the MMR vaccine is safe and essential for protecting children against three serious, potentially life-threatening diseases.",
+    "source": "WHO Vaccine Safety Advisory Committee; CDC Vaccine Safety Datalink",
+    "category": "Vaccines",
+    "keywords": [
+      "mmr", "measles", "mumps", "rubella", "autism", "autistic",
+      "vaccine", "vaccination", "immunisation", "immunization", "tika", "teeka",
+      "खसरा", "एमएमआर", "ऑटिज़्म", "ऑटिज्म", "टीका", "टीके", "टीकाकरण", "खोसरा",
+      "ಎಂಎಂಆರ್", "ದಡಾರ", "ಆಟಿಸಂ", "ಲಸಿಕೆ", "ಲಸಿಕೆಗಳು", "lasike", "daddara"
+    ],
+    "translations": {
+      "hi": {
+        "common_myth": "एमएमआर वैक्सीन से बच्चों में ऑटिज़्म होता है।",
+        "verified_fact": "एमएमआर (खसरा, गलसुआ, रूबेला) वैक्सीन से ऑटिज़्म नहीं होता। यह दावा 1998 के एक अध्ययन से शुरू हुआ था, जिसे बाद में गंभीर नैतिक उल्लंघन और आंकड़ों में हेराफेरी के कारण पूरी तरह वापस ले लिया गया। कई देशों में लाखों बच्चों पर हुए दर्जनों बड़े अध्ययनों में एमएमआर वैक्सीन और ऑटिज़्म के बीच कोई संबंध नहीं मिला। विश्व स्वास्थ्य संगठन (WHO) और दुनिया भर की स्वास्थ्य संस्थाएँ पुष्टि करती हैं कि एमएमआर वैक्सीन सुरक्षित है और तीन गंभीर बीमारियों से बचाव के लिए ज़रूरी है।",
+        "status": "draft",
+        "reviewer": null,
+        "reviewed_at": null,
+        "method": "machine-assisted draft — NOT clinically reviewed"
+      },
+      "kn": {
+        "common_myth": "ಎಂಎಂಆರ್ ಲಸಿಕೆಯಿಂದ ಮಕ್ಕಳಿಗೆ ಆಟಿಸಂ ಬರುತ್ತದೆ.",
+        "verified_fact": "ಎಂಎಂಆರ್ (ದಡಾರ, ಗದ್ದವಾಯು, ರುಬೆಲ್ಲಾ) ಲಸಿಕೆಯಿಂದ ಆಟಿಸಂ ಬರುವುದಿಲ್ಲ. ಈ ಹೇಳಿಕೆ 1998ರ ಒಂದು ಅಧ್ಯಯನದಿಂದ ಹುಟ್ಟಿತು; ಅದನ್ನು ನೈತಿಕ ಉಲ್ಲಂಘನೆ ಮತ್ತು ಮಾಹಿತಿ ದೋಷದ ಕಾರಣ ಸಂಪೂರ್ಣವಾಗಿ ಹಿಂಪಡೆಯಲಾಗಿದೆ. ಹಲವು ದೇಶಗಳಲ್ಲಿ ಲಕ್ಷಾಂತರ ಮಕ್ಕಳ ಮೇಲೆ ನಡೆದ ಡಜನ್ಗಟ್ಟಲೆ ದೊಡ್ಡ ಅಧ್ಯಯನಗಳಲ್ಲಿ ಎಂಎಂಆರ್ ಲಸಿಕೆ ಮತ್ತು ಆಟಿಸಂ ನಡುವೆ ಯಾವುದೇ ಸಂಬಂಧ ಕಂಡುಬಂದಿಲ್ಲ. ವಿಶ್ವ ಆರೋಗ್ಯ ಸಂಸ್ಥೆ (WHO) ಮತ್ತು ಜಗತ್ತಿನ ಆರೋಗ್ಯ ಸಂಸ್ಥೆಗಳು ಎಂಎಂಆರ್ ಲಸಿಕೆ ಸುರಕ್ಷಿತ ಮತ್ತು ಅಗತ್ಯ ಎಂದು ದೃಢಪಡಿಸಿವೆ.",
+        "status": "draft",
+        "reviewer": null,
+        "reviewed_at": null,
+        "method": "machine-assisted draft — NOT clinically reviewed"
+      }
+    }
+  },
+  {
+    "id": 2,
+    "topic": "Polio Drops (OPV)",
+    "topic_i18n": { "hi": "पोलियो की दवा (ओपीवी)", "kn": "ಪೋಲಿಯೊ ಹನಿಗಳು (ಒಪಿವಿ)" },
+    "common_myth": "Oral polio vaccine (OPV) drops can cause polio or make children infertile.",
+    "verified_fact": "The oral polio vaccine (OPV) does not cause polio or infertility. OPV contains a weakened live virus that stimulates the immune system without causing disease in the vast majority of children. In extremely rare cases (approximately 1 in 2.7 million first doses), vaccine-associated paralytic polio can occur, but this risk is far lower than the risk of paralysis from wild poliovirus. There is no scientific evidence that OPV affects fertility. The Global Polio Eradication Initiative, supported by WHO and UNICEF, credits OPV with reducing global polio cases by over 99% since 1988.",
+    "source": "WHO Global Polio Eradication Initiative; UNICEF Immunization Programme",
+    "category": "Vaccines",
+    "keywords": [
+      "polio", "opv", "oral polio", "drops", "paralysis", "paralytic",
+      "infertile", "infertility", "sterility", "boond", "banjh", "polio ki dawa",
+      "पोलियो", "बांझ", "बांझपन", "दवा", "बूंद", "पक्षाघात",
+      "ಪೋಲಿಯೊ", "ಹನಿ", "ಹನಿಗಳು", "ಬಂಜೆ", "ಬಂಜೆತನ", "ಪಕ್ಷಾಘಾತ", "poliovirus"
+    ],
+    "translations": {
+      "hi": {
+        "common_myth": "पोलियो की दवा से पोलियो हो सकता है या बच्चे बांझ हो सकते हैं।",
+        "verified_fact": "ओरल पोलियो वैक्सीन (ओपीवी) से पोलियो या बांझपन नहीं होता। ओपीवी में कमजोर जीवित वायरस होता है, जो लगभग सभी बच्चों में बीमारी पैदा किए बिना रोग-प्रतिरोधक क्षमता बढ़ाता है। बहुत दुर्लभ मामलों में (लगभग 27 लाख पहली खुराक में 1) वैक्सीन से पोलियो का पक्षाघात हो सकता है, लेकिन यह जोखिम जंगली पोलियो वायरस से होने वाले पक्षाघात से बहुत कम है। ओपीवी का प्रजनन क्षमता पर असर होने का कोई वैज्ञानिक प्रमाण नहीं है। WHO और यूनिसेफ के समर्थन वाली ग्लोबल पोलियो एराडिकेशन इनिशिएटिव के अनुसार 1988 से ओपीवी ने वैश्विक पोलियो मामलों में 99% से अधिक की कमी की है।",
+        "status": "draft",
+        "reviewer": null,
+        "reviewed_at": null,
+        "method": "machine-assisted draft — NOT clinically reviewed"
+      },
+      "kn": {
+        "common_myth": "ಪೋಲಿಯೊ ಹನಿಗಳಿಂದ ಪೋಲಿಯೊ ಬರುತ್ತದೆ ಅಥವಾ ಮಕ್ಕಳಿಗೆ ಬಂಜೆತನ ಉಂಟಾಗುತ್ತದೆ.",
+        "verified_fact": "ಓರಲ್ ಪೋಲಿಯೊ ಲಸಿಕೆ (ಒಪಿವಿ)ಯಿಂದ ಪೋಲಿಯೊ ಅಥವಾ ಬಂಜೆತನ ಉಂಟಾಗುವುದಿಲ್ಲ. ಒಪಿವಿಯಲ್ಲಿ ದುರ್ಬಲಗೊಳಿಸಿದ ಜೀವಂತ ವೈರಸ್ ಇರುತ್ತದೆ; ಅದು ಬಹುತೇಕ ಎಲ್ಲ ಮಕ್ಕಳಲ್ಲಿ ರೋಗ ಉಂಟುಮಾಡದೆ ರೋಗನಿರೋಧಕ ಶಕ್ತಿಯನ್ನು ಹೆಚ್ಚಿಸುತ್ತದೆ. ಅತ್ಯಂತ ಅಪರೂಪದ ಸಂದರ್ಭಗಳಲ್ಲಿ (ಸುಮಾರು 27 ಲಕ್ಷ ಮೊದಲ ಡೋಸ್ಗೆ ಒಂದು) ಲಸಿಕೆಯಿಂದ ಪಕ್ಷಾಘಾತ ಉಂಟಾಗಬಹುದು, ಆದರೆ ಇದು ಕಾಡು ಪೋಲಿಯೊ ವೈರಸ್ನಿಂದ ಆಗುವ ಅಪಾಯಕ್ಕಿಂತ ಬಹಳ ಕಡಿಮೆ. ಒಪಿವಿ ಸಂತಾನೋತ್ಪತ್ತಿ ಸಾಮರ್ಥ್ಯದ ಮೇಲೆ ಪರಿಣಾಮ ಬೀರುತ್ತದೆ ಎಂಬ ವೈಜ್ಞಾನಿಕ ಆಧಾರವಿಲ್ಲ. WHO ಮತ್ತು ಯುನಿಸೆಫ್ ಬೆಂಬಲದ ಜಾಗತಿಕ ಪೋಲಿಯೊ ನಿರ್ಮೂಲನ ಯೋಜನೆಯ ಪ್ರಕಾರ 1988ರಿಂದ ಒಪಿವಿ ಜಾಗತಿಕ ಪೋಲಿಯೊ ಪ್ರಕರಣಗಳನ್ನು 99%ಕ್ಕಿಂತ ಹೆಚ್ಚು ಕಡಿಮೆ ಮಾಡಿದೆ.",
+        "status": "draft",
+        "reviewer": null,
+        "reviewed_at": null,
+        "method": "machine-assisted draft — NOT clinically reviewed"
+      }
+    }
+  },
+  {
+    "id": 3,
+    "topic": "Tetanus Toxoid in Pregnancy",
+    "topic_i18n": { "hi": "गर्भावस्था में टेटनस टॉक्सॉइड", "kn": "ಗರ್ಭಾವಸ್ಥೆಯಲ್ಲಿ ಟೆಟನಸ್ ಟಾಕ್ಸಾಯಿಡ್" },
+    "common_myth": "The tetanus toxoid (TT) injection given during pregnancy causes miscarriage or is a secret sterilisation agent.",
+    "verified_fact": "The tetanus toxoid (TT) vaccine given during pregnancy is safe and protects both the mother and her newborn from tetanus infection, which can be fatal. It does not cause miscarriage, infertility, or sterilisation. Maternal and neonatal tetanus remains a preventable cause of death in many low- and middle-income countries. WHO recommends at least two doses of TT for all pregnant women who have not been previously protected. The vaccine has been in routine use for decades and has saved hundreds of thousands of newborn lives.",
+    "source": "WHO Maternal and Neonatal Tetanus Elimination Initiative; Ministry of Health Immunization Guidelines",
+    "category": "Maternal Health",
+    "keywords": [
+      "tetanus", "tt", "toxoid", "injection", "pregnancy", "pregnant",
+      "miscarriage", "sterilisation", "sterilization", "garbhavastha",
+      "tetanus ka injection", "गर्भावस्था", "गर्भवती", "टेटनस", "इंजेक्शन",
+      "गर्भपात", "बांझपन", "नसबंदी",
+      "ಗರ್ಭಧಾರಣೆ", "ಗರ್ಭಿಣಿ", "ಟೆಟನಸ್", "ಚುಚ್ಚುಮದ್ದು", "ಗರ್ಭಪಾತ",
+      "garbhadharane", "chuchu maddu"
+    ],
+    "translations": {
+      "hi": {
+        "common_myth": "गर्भावस्था में लगाया जाने वाला टेटनस का इंजेक्शन गर्भपात कराता है या गुप्त नसबंदी की दवा है।",
+        "verified_fact": "गर्भावस्था में दिया जाने वाला टेटनस टॉक्सॉइड (टीटी) टीका सुरक्षित है और माँ तथा नवजात दोनों को टेटनस से बचाता है, जो जानलेवा हो सकता है। इससे गर्भपात, बांझपन या नसबंदी नहीं होती। कई निम्न और मध्यम आय वाले देशों में मातृ और नवजात टेटनस मृत्यु का एक रोका जा सकने वाला कारण बना हुआ है। जिन गर्भवती महिलाओं को पहले सुरक्षा नहीं मिली है, उनके लिए WHO कम से कम दो खुराक की सलाह देता है। यह टीका दशकों से नियमित रूप से उपयोग में है और इसने लाखों नवजात शिशुओं की जान बचाई है।",
+        "status": "draft",
+        "reviewer": null,
+        "reviewed_at": null,
+        "method": "machine-assisted draft — NOT clinically reviewed"
+      },
+      "kn": {
+        "common_myth": "ಗರ್ಭಧಾರಣೆಯಲ್ಲಿ ಹಾಕುವ ಟೆಟನಸ್ ಚುಚ್ಚುಮದ್ದು ಗರ್ಭಪಾತ ಆಗಿಸುತ್ತದೆ ಅಥವಾ ರಹಸ್ಯ ಬಂಜೆತನದ ಔಷಧಿ ಎಂದು ಹೇಳುತ್ತಾರೆ.",
+        "verified_fact": "ಗರ್ಭಧಾರಣೆಯಲ್ಲಿ ನೀಡುವ ಟೆಟನಸ್ ಟಾಕ್ಸಾಯಿಡ್ (ಟಿಟಿ) ಲಸಿಕೆ ಸುರಕ್ಷಿತ ಮತ್ತು ತಾಯಿ ಹಾಗೂ ನವಜಾತ ಶಿಶುವನ್ನು ಟೆಟನಸ್ನಿಂದ ರಕ್ಷಿಸುತ್ತದೆ; ಟೆಟನಸ್ ಪ್ರಾಣಾಂತಿಕವಾಗಬಹುದು. ಇದರಿಂದ ಗರ್ಭಪಾತ, ಬಂಜೆತನ ಅಥವಾ ಸಂತಾನಶಕ್ತಿ ನಾಶ ಆಗುವುದಿಲ್ಲ. ಅನೇಕ ಕಡಿಮೆ ಮತ್ತು ಮಧ್ಯಮ ಆದಾಯದ ದೇಶಗಳಲ್ಲಿ ತಾಯಿ ಮತ್ತು ನವಜಾತ ಶಿಶುಗಳ ಟೆಟನಸ್ ತಡೆಗಟ್ಟಬಹುದಾದ ಸಾವಿನ ಕಾರಣವಾಗಿದೆ. ಹಿಂದೆ ರಕ್ಷಣೆ ಪಡೆಯದ ಗರ್ಭಿಣಿಯರಿಗೆ WHO ಕನಿಷ್ಠ ಎರಡು ಡೋಸ್ ಟಿಟಿ ಶಿಫಾರಸು ಮಾಡುತ್ತದೆ.",
+        "status": "draft",
+        "reviewer": null,
+        "reviewed_at": null,
+        "method": "machine-assisted draft — NOT clinically reviewed"
+      }
+    }
+  },
+  {
+    "id": 4,
+    "topic": "Maternal Nutrition",
+    "topic_i18n": { "hi": "गर्भावस्था में पोषण", "kn": "ಗರ್ಭಾವಸ್ಥೆಯ ಪೋಷಣೆ" },
+    "common_myth": "A pregnant woman should eat for two and avoid many foods such as eggs, papaya, and cold water to protect the baby.",
+    "verified_fact": "During pregnancy, a woman needs additional nutrients but does not need to double her calorie intake. WHO and national nutrition guidelines recommend a balanced diet rich in iron, folic acid, calcium, and protein. Eggs are safe and nutritious during pregnancy and provide important protein and choline for fetal brain development. Ripe papaya is safe to eat; unripe papaya contains latex which should be avoided in large quantities. Drinking safe, clean water at any temperature is not harmful to the pregnancy. Restricting nutritious foods can lead to maternal anaemia, low birth weight, and poor fetal development.",
+    "source": "WHO Nutrition Guidance for Pregnant Women; National Nutrition Programme Guidelines",
+    "category": "Maternal Health",
+    "keywords": [
+      "nutrition", "diet", "eat", "food", "eggs", "egg", "papaya", "water",
+      "cold water", "anaemia", "anemia", "birth weight", "khana", "ande",
+      "papita", "pani", "खाना", "भोजन", "अंडा", "अंडे", "पपीता", "पानी",
+      "खानपान", "गर्भावस्था", "ಆಹಾರ", "ಮೊಟ್ಟೆ", "ಮೊಟ್ಟೆಗಳು", "ಪಪ್ಪಾಯಿ",
+      "ನೀರು", "oota", "motte", "pappayi", "neeru", "garbhavastha"
+    ],
+    "translations": {
+      "hi": {
+        "common_myth": "गर्भवती महिला को दो लोगों का खाना खाना चाहिए और अंडे, पपीता तथा ठंडा पानी जैसी कई चीज़ें छोड़ देनी चाहिए।",
+        "verified_fact": "गर्भावस्था में महिला को अतिरिक्त पोषक तत्व चाहिए, लेकिन कैलोरी दोगुनी करने की ज़रूरत नहीं होती। WHO और राष्ट्रीय पोषण दिशानिर्देश लोहा, फोलिक एसिड, कैल्शियम और प्रोटीन से भरपूर संतुलित भोजन की सलाह देते हैं। अंडे गर्भावस्था में सुरक्षित और पौष्टिक हैं और शिशु के मस्तिष्क विकास के लिए ज़रूरी प्रोटीन तथा कोलीन देते हैं। पका हुआ पपीता खाना सुरक्षित है; कच्चे पपीते में लेटेक्स होता है, जिसे ज़्यादा मात्रा में नहीं लेना चाहिए। साफ पानी किसी भी तापमान पर गर्भावस्था के लिए नुकसानदेह नहीं है। पौष्टिक भोजन छोड़ने से मातृ एनीमिया, कम जन्म भार और शिशु के विकास में कमी हो सकती है।",
+        "status": "draft",
+        "reviewer": null,
+        "reviewed_at": null,
+        "method": "machine-assisted draft — NOT clinically reviewed"
+      },
+      "kn": {
+        "common_myth": "ಗರ್ಭಿಣಿ ಇಬ್ಬರಿಗೆ ಊಟ ಮಾಡಬೇಕು ಮತ್ತು ಮೊಟ್ಟೆ, ಪಪ್ಪಾಯಿ, ತಣ್ಣೀರು ಮುಂತಾದವನ್ನು ಬಿಡಬೇಕು ಎಂದು ಹೇಳುತ್ತಾರೆ.",
+        "verified_fact": "ಗರ್ಭಾವಸ್ಥೆಯಲ್ಲಿ ಹೆಚ್ಚುವರಿ ಪೋಷಕಾಂಶ ಬೇಕು, ಆದರೆ ಕ್ಯಾಲೊರಿ ಎರಡು ಪಟ್ಟು ಮಾಡಬೇಕಿಲ್ಲ. ಕಬ್ಬಿಣ, ಫೋಲಿಕ್ ಆಮ್ಲ, ಕ್ಯಾಲ್ಸಿಯಂ ಮತ್ತು ಪ್ರೋಟೀನ್ ಭರಿತ ಸಮತೋಲಿತ ಆಹಾರವನ್ನು WHO ಮತ್ತು ರಾಷ್ಟ್ರೀಯ ಪೋಷಣಾ ಮಾರ್ಗಸೂಚಿಗಳು ಶಿಫಾರಸು ಮಾಡುತ್ತವೆ. ಮೊಟ್ಟೆ ಗರ್ಭಾವಸ್ಥೆಯಲ್ಲಿ ಸುರಕ್ಷಿತ ಮತ್ತು ಪೌಷ್ಟಿಕ; ಮಗುವಿನ ಮಿದುಳಿನ ಬೆಳವಣಿಗೆಗೆ ಬೇಕಾದ ಪ್ರೋಟೀನ್ ಮತ್ತು ಕೋಲೀನ್ ನೀಡುತ್ತದೆ. ಹಣ್ಣಾದ ಪಪ್ಪಾಯಿ ತಿನ್ನಲು ಸುರಕ್ಷಿತ; ಹಸಿ ಪಪ್ಪಾಯಿಯಲ್ಲಿ ಲ್ಯಾಟೆಕ್ಸ್ ಇರುತ್ತದೆ, ಅದನ್ನು ಹೆಚ್ಚು ಸೇವಿಸಬಾರದು. ಶುದ್ಧ ನೀರು ಯಾವ ತಾಪಮಾನದಲ್ಲೂ ಗರ್ಭಾವಸ್ಥೆಗೆ ಹಾನಿ ಮಾಡುವುದಿಲ್ಲ. ಪೌಷ್ಟಿಕ ಆಹಾರ ಕಡಿಮೆ ಮಾಡಿದರೆ ರಕ್ತಹೀನತೆ, ಕಡಿಮೆ ಜನನ ತೂಕ ಮತ್ತು ಮಗುವಿನ ಬೆಳವಣಿಗೆ ಕೊರತೆ ಉಂಟಾಗಬಹುದು.",
+        "status": "draft",
+        "reviewer": null,
+        "reviewed_at": null,
+        "method": "machine-assisted draft — NOT clinically reviewed"
+      }
+    }
+  },
+  {
+    "id": 5,
+    "topic": "Fever Management",
+    "topic_i18n": { "hi": "बुखार का प्रबंधन", "kn": "ಜ್ವರ ನಿರ್ವಹಣೆ" },
+    "common_myth": "You should wrap a child in blankets to 'sweat out' a fever, and never give them water or medicine.",
+    "verified_fact": "Wrapping a feverish child in heavy blankets traps heat and can dangerously raise body temperature, increasing the risk of febrile convulsions. WHO and paediatric guidelines recommend keeping a feverish child lightly clothed in a cool, well-ventilated room, offering frequent sips of clean water or oral rehydration solution (ORS) to prevent dehydration, and using a recommended antipyretic such as paracetamol (acetaminophen) at the correct weight-based dose to reduce discomfort. If fever is above 39°C (102.2°F), persists beyond two days, or is accompanied by difficulty breathing, a rash, stiff neck, or severe headache, the child should be taken to a health facility immediately.",
+    "source": "WHO Integrated Management of Childhood Illness (IMCI); Paediatric Society Fever Management Guidelines",
+    "category": "Child Health",
+    "keywords": [
+      "fever", "temperature", "blanket", "wrap", "sweat", "paracetamol",
+      "acetaminophen", "ors", "dehydration", "convulsion", "bukhar", "kambal",
+      "बुखार", "कंबल", "पानी", "पैरासिटामोल", "बच्चा", "दौरा", "ज्वर",
+      "ಜ್ವರ", "ಕಂಬಳಿ", "ನೀರು", "ಪ್ಯಾರಸಿಟಮಾಲ್", "ಮಗು", "ಸೆಳೆತ", "jvara",
+      "jwara", "kambali", "magu"
+    ],
+    "translations": {
+      "hi": {
+        "common_myth": "बुखार निकालने के लिए बच्चे को कंबल में लपेटें और उसे पानी या दवा बिल्कुल न दें।",
+        "verified_fact": "बुखार वाले बच्चे को भारी कंबल में लपेटने से गर्मी बाहर नहीं निकलती और शरीर का तापमान खतरनाक रूप से बढ़ सकता है, जिससे दौरे का खतरा बढ़ता है। WHO और शिशु रोग दिशानिर्देश कहते हैं कि बच्चे को हल्के कपड़े पहनाकर ठंडी, हवादार जगह में रखें, बार-बार साफ पानी या ओआरएस दें ताकि पानी की कमी न हो, और तकलीफ कम करने के लिए वजन के अनुसार पैरासिटामोल जैसी दवा दें। बुखार 39 डिग्री सेल्सियस से ऊपर हो, दो दिन से ज़्यादा रहे, या सांस लेने में कठिनाई, दाने, गर्दन में अकड़न या तेज़ सिरदर्द हो तो बच्चे को तुरंत स्वास्थ्य केंद्र ले जाएँ।",
+        "status": "draft",
+        "reviewer": null,
+        "reviewed_at": null,
+        "method": "machine-assisted draft — NOT clinically reviewed"
+      },
+      "kn": {
+        "common_myth": "ಜ್ವರ ಬರಿಸಲು ಮಗುವನ್ನು ಕಂಬಳಿಯಲ್ಲಿ ಸುತ್ತಿ, ನೀರು ಅಥವಾ ಔಷಧಿ ಕೊಡಬಾರದು ಎಂದು ಹೇಳುತ್ತಾರೆ.",
+        "verified_fact": "ಜ್ವರ ಇರುವ ಮಗುವನ್ನು ದಪ್ಪ ಕಂಬಳಿಯಲ್ಲಿ ಸುತ್ತಿದರೆ ಶಾಖ ಹೊರಹೋಗದೆ ದೇಹದ ಉಷ್ಣತೆ ಅಪಾಯಕಾರಿಯಾಗಿ ಏರಬಹುದು ಮತ್ತು ಸೆಳೆತದ ಅಪಾಯ ಹೆಚ್ಚುತ್ತದೆ. WHO ಮತ್ತು ಮಕ್ಕಳ ವೈದ್ಯಕೀಯ ಮಾರ್ಗಸೂಚಿಗಳ ಪ್ರಕಾರ ಮಗುವಿಗೆ ತೆಳುವಾದ ಬಟ್ಟೆ ಹಾಕಿ, ಗಾಳಿ ಇರುವ ತಂಪಾದ ಕೋಣೆಯಲ್ಲಿ ಇಡಿ, ಆಗಾಗ ಶುದ್ಧ ನೀರು ಅಥವಾ ಒಆರ್ಎಸ್ ಕೊಟ್ಟು ನಿರ್ಜಲೀಕರಣ ತಪ್ಪಿಸಿ, ತೂಕಕ್ಕೆ ತಕ್ಕಂತೆ ಪ್ಯಾರಸಿಟಮಾಲ್ ನೀಡಿ. ಜ್ವರ 39 ಡಿಗ್ರಿ ಸೆಲ್ಸಿಯಸ್ಗಿಂತ ಹೆಚ್ಚಿದ್ದರೆ, ಎರಡು ದಿನಕ್ಕಿಂತ ಹೆಚ್ಚು ಕಾಲ ಇದ್ದರೆ, ಅಥವಾ ಉಸಿರಾಟದ ತೊಂದರೆ, ದದ್ದು, ಕುತ್ತಿಗೆ ಬಿಗಿತ ಅಥವಾ ತೀವ್ರ ತಲೆನೋವು ಇದ್ದರೆ ಮಗುವನ್ನು ತಕ್ಷಣ ಆರೋಗ್ಯ ಕೇಂದ್ರಕ್ಕೆ ಕರೆದೊಯ್ಯಿ.",
+        "status": "draft",
+        "reviewer": null,
+        "reviewed_at": null,
+        "method": "machine-assisted draft — NOT clinically reviewed"
+      }
+    }
+  },
+  {
+    "id": 6,
+    "topic": "Antibiotic Misuse",
+    "topic_i18n": { "hi": "एंटीबायोटिक का गलत उपयोग", "kn": "ಆಂಟಿಬಯಾಟಿಕ್ ದುರ್ಬಳಕೆ" },
+    "common_myth": "Antibiotics can cure the common cold, flu, and other viral infections, and it is fine to stop taking them early once you feel better.",
+    "verified_fact": "Antibiotics are effective only against bacterial infections; they have no effect on viruses, including the viruses that cause the common cold, influenza, and most sore throats. Taking antibiotics for viral illnesses exposes patients to side effects without benefit and contributes to antimicrobial resistance (AMR), which WHO identifies as one of the greatest global public health threats. When a doctor does prescribe antibiotics for a confirmed bacterial infection, patients must complete the full prescribed course even if they feel better, because stopping early can leave surviving bacteria that may develop resistance. Always use antibiotics only as prescribed by a qualified health worker.",
+    "source": "WHO Global Action Plan on Antimicrobial Resistance; National AMR Awareness Programme",
+    "category": "Medication",
+    "keywords": [
+      "antibiotic", "antibiotics", "cold", "flu", "viral", "virus", "bacteria",
+      "resistance", "amr", "course", "zukaam", "zukam", "sardi", "khansi",
+      "एंटीबायोटिक", "जुकाम", "सर्दी", "फ्लू", "दवा", "दवाई", "प्रतिरोध",
+      "ಆಂಟಿಬಯಾಟಿಕ್", "ಶೀತ", "ಜ್ವರ", "ಔಷಧಿ", "ನಿರೋಧಕತೆ", "oushadhi", "shita"
+    ],
+    "translations": {
+      "hi": {
+        "common_myth": "एंटीबायोटिक से जुकाम, फ्लू और अन्य वायरल संक्रमण ठीक हो जाते हैं, और ठीक लगने पर बीच में दवा रोक देना ठीक है।",
+        "verified_fact": "एंटीबायोटिक केवल बैक्टीरिया से होने वाले संक्रमण पर असर करती है; सर्दी, फ्लू और ज़्यादातर गले के दर्द जैसे वायरस पर इसका कोई असर नहीं होता। वायरल बीमारी में एंटीबायोटिक लेने से मरीज़ को बिना लाभ दुष्प्रभाव मिलते हैं और एंटीमाइक्रोबियल प्रतिरोध (एएमआर) बढ़ता है, जिसे WHO वैश्विक जन-स्वास्थ्य के सबसे बड़े खतरों में गिनता है। अगर डॉक्टर पुष्ट बैक्टीरियल संक्रमण के लिए एंटीबायोटिक देते हैं, तो ठीक लगने पर भी पूरा कोर्स करें, क्योंकि बीच में रोकने से बचे बैक्टीरिया प्रतिरोधी हो सकते हैं। एंटीबायोटिक का उपयोग केवल योग्य स्वास्थ्य कार्यकर्ता की सलाह से करें।",
+        "status": "draft",
+        "reviewer": null,
+        "reviewed_at": null,
+        "method": "machine-assisted draft — NOT clinically reviewed"
+      },
+      "kn": {
+        "common_myth": "ಆಂಟಿಬಯಾಟಿಕ್ನಿಂದ ಶೀತ, ಜ್ವರ ಮತ್ತು ಬೇರೆ ವೈರಲ್ ಸೋಂಕುಗಳು ವಾಸಿಯಾಗುತ್ತವೆ; ಚೆನ್ನಾಗಿದೆ ಅನಿಸಿದಾಗ ಔಷಧಿ ನಿಲ್ಲಿಸಬಹುದು ಎಂದು ಹೇಳುತ್ತಾರೆ.",
+        "verified_fact": "ಆಂಟಿಬಯಾಟಿಕ್ ಬ್ಯಾಕ್ಟೀರಿಯಾ ಸೋಂಕಿಗೆ ಮಾತ್ರ ಪರಿಣಾಮಕಾರಿ; ಶೀತ, ಜ್ವರ, ಗಂಟಲು ನೋವು ಮುಂತಾದ ವೈರಸ್ ಸೋಂಕುಗಳಿಗೆ ಅದು ಕೆಲಸ ಮಾಡುವುದಿಲ್ಲ. ವೈರಲ್ ಕಾಯಿಲೆಗೆ ಆಂಟಿಬಯಾಟಿಕ್ ತೆಗೆದುಕೊಂಡರೆ ಲಾಭವಿಲ್ಲದೆ ಅಡ್ಡ ಪರಿಣಾಮಗಳು ಉಂಟಾಗಿ, ಔಷಧ ನಿರೋಧಕತೆ (ಎಎಂಆರ್) ಹೆಚ್ಚುತ್ತದೆ; WHO ಇದನ್ನು ಜಾಗತಿಕ ಆರೋಗ್ಯದ ದೊಡ್ಡ ಅಪಾಯ ಎಂದು ಗುರುತಿಸಿದೆ. ವೈದ್ಯರು ದೃಢಪಟ್ಟ ಬ್ಯಾಕ್ಟೀರಿಯಾ ಸೋಂಕಿಗೆ ಆಂಟಿಬಯಾಟಿಕ್ ನೀಡಿದರೆ, ಚೆನ್ನಾಗಿದೆ ಅನಿಸಿದರೂ ಪೂರ್ತಿ ಕೋರ್ಸ್ ಮುಗಿಸಿ; ಮಧ್ಯದಲ್ಲಿ ನಿಲ್ಲಿಸಿದರೆ ಉಳಿದ ಬ್ಯಾಕ್ಟೀರಿಯಾ ನಿರೋಧಕವಾಗಬಹುದು. ಆಂಟಿಬಯಾಟಿಕ್ ಅನ್ನು ಅರ್ಹ ಆರೋಗ್ಯ ಕಾರ್ಯಕರ್ತರ ಸಲಹೆಯಂತೆ ಮಾತ್ರ ಬಳಸಿ.",
+        "status": "draft",
+        "reviewer": null,
+        "reviewed_at": null,
+        "method": "machine-assisted draft — NOT clinically reviewed"
+      }
+    }
+  },
+  {
+    "id": 7,
+    "topic": "COVID-19 Vaccine",
+    "topic_i18n": { "hi": "कोविड-19 वैक्सीन", "kn": "ಕೋವಿಡ್-19 ಲಸಿಕೆ" },
+    "common_myth": "COVID-19 vaccines alter your DNA or contain microchips to track people.",
+    "verified_fact": "COVID-19 vaccines do not alter human DNA and do not contain microchips, trackers, or any surveillance technology. mRNA vaccines (such as Pfizer-BioNTech and Moderna) deliver temporary genetic instructions that teach immune cells to recognise the SARS-CoV-2 spike protein; mRNA breaks down within days and never enters the cell nucleus where DNA is stored. Viral vector vaccines (such as AstraZeneca) use a harmless carrier virus and also do not interact with human DNA. All COVID-19 vaccines approved under WHO Emergency Use Listing have undergone rigorous safety and efficacy trials.",
+    "source": "WHO COVID-19 Vaccine Explainer; US FDA Vaccine Authorization Fact Sheets",
+    "category": "Vaccines",
+    "keywords": [
+      "covid", "covid-19", "corona", "coronavirus", "vaccine", "dna",
+      "microchip", "chip", "tracker", "rna", "mrna", "astrazeneca", "pfizer",
+      "कोविड", "कोरोना", "वैक्सीन", "चिप", "टीका", "कोविड वैक्सीन",
+      "ಕೋವಿಡ್", "ಕೊರೊನಾ", "ಲಸಿಕೆ", "ಚಿಪ್", "covid lasike"
+    ],
+    "translations": {
+      "hi": {
+        "common_myth": "कोविड-19 वैक्सीन शरीर का डीएनए बदल देती है या उसमें लोगों पर नज़र रखने वाली माइक्रोचिप होती है।",
+        "verified_fact": "कोविड-19 वैक्सीन मानव डीएनए नहीं बदलती और उसमें कोई माइक्रोचिप, ट्रैकर या निगरानी तकनीक नहीं होती। एमआरएनए वैक्सीन (जैसे फाइज़र-बायोएनटेक और मॉडर्ना) शरीर को अस्थायी निर्देश देती हैं, जिनसे प्रतिरोधक कोशिकाएँ वायरस को पहचानना सीखती हैं; एमआरएनए कुछ दिनों में टूट जाता है और कभी कोशिका के नाभिक तक नहीं पहुँचता, जहाँ डीएनए रहता है। वायरल वेक्टर वैक्सीन (जैसे एस्ट्राज़ेनेका) एक हानिरहित वाहक वायरस का उपयोग करती हैं और मानव डीएनए से भी नहीं जुड़तीं। WHO की इमरजेंसी यूज़ लिस्टिंग के तहत मंज़ूर सभी कोविड-19 वैक्सीन कड़े सुरक्षा और प्रभावकारिता परीक्षणों से गुज़री हैं।",
+        "status": "draft",
+        "reviewer": null,
+        "reviewed_at": null,
+        "method": "machine-assisted draft — NOT clinically reviewed"
+      },
+      "kn": {
+        "common_myth": "ಕೋವಿಡ್-19 ಲಸಿಕೆ ದೇಹದ ಡಿಎನ್ಎ ಬದಲಾಯಿಸುತ್ತದೆ ಅಥವಾ ಜನರನ್ನು ಗಮನಿಸಲು ಮೈಕ್ರೋಚಿಪ್ ಹೊಂದಿದೆ ಎಂದು ಹೇಳುತ್ತಾರೆ.",
+        "verified_fact": "ಕೋವಿಡ್-19 ಲಸಿಕೆ ಮಾನವ ಡಿಎನ್ಎ ಬದಲಾಯಿಸುವುದಿಲ್ಲ ಮತ್ತು ಅದರಲ್ಲಿ ಮೈಕ್ರೋಚಿಪ್, ಟ್ರ್ಯಾಕರ್ ಅಥವಾ ಯಾವುದೇ ಕಣ್ಗಾವಲು ತಂತ್ರಜ್ಞಾನ ಇಲ್ಲ. ಎಂಆರ್ಎನಎ ಲಸಿಕೆಗಳು (ಉದಾ. ಫೈಜರ್-ಬಯೋಎನ್ಟೆಕ್, ಮಾಡರ್ನಾ) ದೇಹಕ್ಕೆ ತಾತ್ಕಾಲಿಕ ಸೂಚನೆ ನೀಡಿ ರೋಗನಿರೋಧಕ ಜೀವಕೋಶಗಳಿಗೆ ವೈರಸ್ ಗುರುತಿಸಲು ಕಲಿಸುತ್ತವೆ; ಎಂಆರ್ಎನಎ ಕೆಲವೇ ದಿನಗಳಲ್ಲಿ ಕರಗಿಹೋಗುತ್ತದೆ ಮತ್ತು ಡಿಎನ್ಎ ಇರುವ ಜೀವಕೋಶದ ಕೇಂದ್ರಕ್ಕೆ ಎಂದೂ ತಲುಪುವುದಿಲ್ಲ. ವೈರಲ್ ವೆಕ್ಟರ್ ಲಸಿಕೆಗಳು (ಉದಾ. ಆಸ್ಟ್ರಜೆನೆಕಾ) ಹಾನಿಕರವಲ್ಲದ ವಾಹಕ ವೈರಸ್ ಬಳಸುತ್ತವೆ ಮತ್ತು ಮಾನವ ಡಿಎನ್ಎ ಜೊತೆ ಸೇರುವುದಿಲ್ಲ. WHO ತುರ್ತು ಬಳಕೆ ಪಟ್ಟಿಯಲ್ಲಿ ಅನುಮೋದಿಸಿದ ಎಲ್ಲ ಕೋವಿಡ್-19 ಲಸಿಕೆಗಳು ಕಟ್ಟುನಿಟ್ಟಿನ ಸುರಕ್ಷತಾ ಪರೀಕ್ಷೆಗಳನ್ನು ಮುಗಿಸಿವೆ.",
+        "status": "draft",
+        "reviewer": null,
+        "reviewed_at": null,
+        "method": "machine-assisted draft — NOT clinically reviewed"
+      }
+    }
+  },
+  {
+    "id": 8,
+    "topic": "Breastfeeding and HIV",
+    "topic_i18n": { "hi": "स्तनपान और एचआईवी", "kn": "ಎದೆಹಾಲು ಮತ್ತು ಎಚ್ಐವಿ" },
+    "common_myth": "A mother who is HIV-positive must never breastfeed her baby.",
+    "verified_fact": "For mothers living with HIV who have access to antiretroviral therapy (ART), WHO recommends exclusive breastfeeding for the first six months, as the protective benefits of breastfeeding — including prevention of diarrhoea, pneumonia, and malnutrition — outweigh the risk of HIV transmission when the mother is on effective ART and has an undetectable viral load. Mothers on ART with sustained viral suppression have a very low risk of transmitting HIV through breastfeeding. Decisions should be made in consultation with a qualified health worker, taking into account the availability of ART and safe drinking water.",
+    "source": "WHO HIV and Infant Feeding Guidelines 2023",
+    "category": "Maternal Health",
+    "keywords": [
+      "hiv", "breastfeeding", "breastfeed", "breast milk", "mother", "art",
+      "antiretroviral", "transmission", "viral load", "stanpan", "doodh", "maa",
+      "एचआईवी", "स्तनपान", "दूध", "माँ", "मां", "दूध पिलाना", "एआरटी",
+      "ಎಚ್ಐವಿ", "ಎಚ್‌ಐವಿ", "ಎದೆಹಾಲು", "ಹಾಲು", "ತಾಯಿ", "edehalu", "haalu", "taayi"
+    ],
+    "translations": {
+      "hi": {
+        "common_myth": "एचआईवी पॉजिटिव माँ को अपने बच्चे को कभी दूध नहीं पिलाना चाहिए।",
+        "verified_fact": "जिन माताओं को एचआईवी है और जिनके पास एंटीरेट्रोवायरल थेरेपी (एआरटी) उपलब्ध है, उनके लिए WHO पहले छह महीने तक केवल स्तनपान की सलाह देता है, क्योंकि जब माँ प्रभावी एआरटी पर हो और वायरल लोड न पकड़ में आए, तो दस्त, निमोनिया और कुपोषण से बचाव का लाभ एचआईवी संक्रमण के जोखिम से अधिक होता है। लगातार वायरल दमन वाली एआरटी पर रहने वाली माताओं में स्तनपान से एचआईवी फैलने का जोखिम बहुत कम होता है। निर्णय योग्य स्वास्थ्य कार्यकर्ता की सलाह से लें, और एआरटी तथा साफ पानी की उपलब्धता को ध्यान में रखें।",
+        "status": "draft",
+        "reviewer": null,
+        "reviewed_at": null,
+        "method": "machine-assisted draft — NOT clinically reviewed"
+      },
+      "kn": {
+        "common_myth": "ಎಚ್ಐವಿ ಪಾಸಿಟಿವ್ ತಾಯಿ ತನ್ನ ಮಗುವಿಗೆ ಎಂದಿಗೂ ಎದೆಹಾಲು ಕೊಡಬಾರದು ಎಂದು ಹೇಳುತ್ತಾರೆ.",
+        "verified_fact": "ಎಚ್ಐವಿ ಇರುವ ಮತ್ತು ಎಆರ್ಟಿ (ಆಂಟಿರೆಟ್ರೋವೈರಲ್ ಚಿಕಿತ್ಸೆ) ಲಭ್ಯವಿರುವ ತಾಯಂದಿರಿಗೆ WHO ಮೊದಲ ಆರು ತಿಂಗಳು ಎದೆಹಾಲು ಮಾತ್ರ ಕೊಡಲು ಶಿಫಾರಸು ಮಾಡುತ್ತದೆ; ತಾಯಿ ಪರಿಣಾಮಕಾರಿ ಎಆರ್ಟಿ ಪಡೆದು ವೈರಲ್ ಲೋಡ್ ಪತ್ತೆಯಾಗದಿದ್ದರೆ, ಭೇದಿ, ನ್ಯುಮೋನಿಯಾ ಮತ್ತು ಅಪೌಷ್ಟಿಕತೆಯಿಂದ ರಕ್ಷಣೆ ಸಿಗುವ ಲಾಭ ಎಚ್ಐವಿ ಹರಡುವ ಅಪಾಯಕ್ಕಿಂತ ಹೆಚ್ಚು. ನಿರಂತರವಾಗಿ ವೈರಸ್ ನಿಯಂತ್ರಣದಲ್ಲಿರುವ ತಾಯಂದಿರಲ್ಲಿ ಎದೆಹಾಲಿನಿಂದ ಎಚ್ಐವಿ ಹರಡುವ ಅಪಾಯ ಬಹಳ ಕಡಿಮೆ. ನಿರ್ಧಾರವನ್ನು ಅರ್ಹ ಆರೋಗ್ಯ ಕಾರ್ಯಕರ್ತರ ಸಲಹೆಯೊಂದಿಗೆ, ಎಆರ್ಟಿ ಮತ್ತು ಸುರಕ್ಷಿತ ಕುಡಿಯುವ ನೀರಿನ ಲಭ್ಯತೆಯನ್ನು ಗಮನದಲ್ಲಿಟ್ಟುಕೊಂಡು ತೆಗೆದುಕೊಳ್ಳಬೇಕು.",
+        "status": "draft",
+        "reviewer": null,
+        "reviewed_at": null,
+        "method": "machine-assisted draft — NOT clinically reviewed"
+      }
+    }
+  }
+]

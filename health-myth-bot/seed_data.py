@@ -6,16 +6,21 @@ Usage:
 Behaviour:
 - Calls database.init_db() to ensure tables exist.
 - Clears existing seed rows first (idempotent re-seed).
-- Inserts rows spanning English, Hindi, and Swahili across all categories,
-  timestamps spread over the last 7 days, with at least 3 emergency rows.
+- Inserts rows spanning English, Hindi, and Kannada — plus one romanised
+  Hinglish and one romanised Kanglish row, because those are the inputs the
+  language detector has to handle without a native script to go on — across
+  all categories, timestamps spread over the last 7 days, with at least 3
+  emergency rows.
 - Also inserts sample feedback, a flagged myth, and session rows.
+- Seeds the 24-hour service window for the demo numbers, so a dashboard-triggered
+  advisory can actually be delivered in a demo without inventing recipients.
 """
 
 import hashlib
 import sqlite3
 from datetime import datetime, timedelta, timezone
 
-import database
+from bot import database
 
 SEED_MARKER = "[SEED]"
 
@@ -40,20 +45,25 @@ SEED_ROWS = [
     ("बच्चे को बुखार है 104 डिग्री, क्या करें? " + SEED_MARKER, "hi", "Child Health", False, 50),
     ("क्या COVID वैक्सीन से DNA बदल जाता है? " + SEED_MARKER, "hi", "Vaccines", False, 36),
     ("दूध पिलाने वाली माँ HIV पॉजिटिव है, क्या बच्चे को दूध पिला सकती है? " + SEED_MARKER, "hi", "Maternal Health", False, 24),
-    ("Je, chanjo ya MMR inasababisha ugonjwa wa akili kwa watoto? " + SEED_MARKER, "sw", "Vaccines", False, 160),
-    ("Dawa za polio zinafanya watoto kushindwa kuzaa ukubwani? " + SEED_MARKER, "sw", "Vaccines", False, 140),
-    ("Sindano ya pepopunda wakati wa ujauzito ni salama? " + SEED_MARKER, "sw", "Maternal Health", False, 110),
-    ("Mama mjamzito anapaswa kula mayai au la? " + SEED_MARKER, "sw", "Maternal Health", False, 88),
-    ("Mtoto wangu ana homa kali sana, nifanye nini? " + SEED_MARKER, "sw", "Child Health", False, 76),
-    ("Antibiotiki zinaponya mafua ya kawaida? " + SEED_MARKER, "sw", "Medication", False, 66),
-    ("Je, chanjo ya COVID ina chip ndani yake? " + SEED_MARKER, "sw", "Vaccines", False, 54),
-    ("Mtu anapigwa na kifafa na hana fahamu sasa hivi " + SEED_MARKER, "sw", "Emergency", True, 42),
-    ("Mtoto wangu amemeza dawa nyingi, hana nguvu " + SEED_MARKER, "sw", "Medication", False, 30),
-    ("Mama anayenyonyesha ana virusi vya ukimwi, anaweza kunyonyesha? " + SEED_MARKER, "sw", "Maternal Health", False, 12),
+    ("ಎಂಎಂಆರ್ ಲಸಿಕೆಯಿಂದ ಮಕ್ಕಳಿಗೆ ಆಟಿಸಂ ಬರುತ್ತದೆ ಎಂದು ನೆರೆಹೊರೆಯವರು ಹೇಳುತ್ತಾರೆ " + SEED_MARKER, "kn", "Vaccines", False, 160),
+    ("ಪೋಲಿಯೊ ಹನಿಗಳಿಂದ ಮಕ್ಕಳಿಗೆ ಯಾವುದಾದರೂ ತೊಂದರೆ ಆಗುತ್ತದೆಯೇ? " + SEED_MARKER, "kn", "Vaccines", False, 140),
+    ("ಗರ್ಭಾವಸ್ಥೆಯಲ್ಲಿ ಟೆಟನಸ್ ಚುಚ್ಚುಮದ್ದು ಸುರಕ್ಷಿತವೇ? " + SEED_MARKER, "kn", "Maternal Health", False, 110),
+    ("ಗರ್ಭಿಣಿಗೆ ಯಾವ ಆಹಾರ ಕೊಡಬೇಕು, ಯಾವುದು ಕೊಡಬಾರದು? " + SEED_MARKER, "kn", "Maternal Health", False, 88),
+    ("ಜ್ವರ ಇರುವ ಮಗುವನ್ನು ಕಂಬಳಿಯಲ್ಲಿ ಸುತ್ತಬೇಕೇ? " + SEED_MARKER, "kn", "Child Health", False, 76),
+    ("ಆಂಟಿಬಯಾಟಿಕ್ನಿಂದ ಶೀತ ವಾಸಿಯಾಗುತ್ತದೆಯೇ? " + SEED_MARKER, "kn", "Medication", False, 66),
+    ("ಕೋವಿಡ್ ಲಸಿಕೆಯಿಂದ ಡಿಎನ್‌ಎ ಬದಲಾಗುತ್ತದೆಯೇ? " + SEED_MARKER, "kn", "Vaccines", False, 54),
+    ("ನನ್ನ ಅಪ್ಪನ ಎದೆಯಲ್ಲಿ ತುಂಬಾ ನೋವು ಇದೆ, ಈಗಲೇ ಏನು ಮಾಡಬೇಕು " + SEED_MARKER, "kn", "Emergency", True, 42),
+    ("ನನ್ನ ಮಗು ತುಂಬಾ ಔಷಧಿ ನುಂಗಿದೆ, ಸುಸ್ತಾಗಿದೆ " + SEED_MARKER, "kn", "Medication", False, 30),
+    ("ಎಚ್‌ಐವಿ ಇರುವ ತಾಯಿ ಮಗುವಿಗೆ ಎದೆಹಾಲು ಕೊಡಬಹುದೇ? " + SEED_MARKER, "kn", "Maternal Health", False, 12),
+    # Romanised input: no native script for langdetect to work with, which is
+    # exactly why the detector has its own romanised lexicon scorer.
+    ("nange tumba jvara ide, enu madali " + SEED_MARKER, "kn", "Child Health", False, 8),
+    ("mujhe bukhar aur khaansi hai, kaun si dawa lein " + SEED_MARKER, "hi", "Child Health", False, 6),
 ]
 
-assert len(SEED_ROWS) == 30
+assert len(SEED_ROWS) == 32
 assert sum(1 for r in SEED_ROWS if r[3]) >= 3
+assert {r[1] for r in SEED_ROWS} == {"en", "hi", "kn"}
 
 
 def _fmt(dt: datetime) -> str:
@@ -80,7 +90,7 @@ def run_seed() -> None:
 
         demo_phones = [
             "+91XXXXXXXXX1", "+91XXXXXXXXX2", "+91XXXXXXXXX3",
-            "+254XXXXXXXX4", "+254XXXXXXXX5", "+1XXXXXXXXXX6",
+            "+91XXXXXXXXX4", "+91XXXXXXXXX5", "+1XXXXXXXXXX6",
         ]
 
         inserted_ids = []
@@ -131,8 +141,8 @@ def run_seed() -> None:
             ("+91XXXXXXXXX1", "hi"),
             ("+91XXXXXXXXX2", "en"),
             ("+91XXXXXXXXX3", "hi"),
-            ("+254XXXXXXXX4", "sw"),
-            ("+254XXXXXXXX5", "sw"),
+            ("+91XXXXXXXXX4", "kn"),
+            ("+91XXXXXXXXX5", "kn"),
             ("+1XXXXXXXXXX6", "en"),
         ]:
             conn.execute(
@@ -154,6 +164,20 @@ def run_seed() -> None:
 
         conn.commit()
         print("Upserted 6 session rows.")
+
+        # Open each demo user's 24-hour reply window. Without this, a
+        # dashboard-triggered advisory has no free recipients to reach and
+        # reports "no users inside their 24h service window".
+        for phone, _ in [
+            ("+91XXXXXXXXX1", "hi"),
+            ("+91XXXXXXXXX2", "en"),
+            ("+91XXXXXXXXX3", "hi"),
+            ("+91XXXXXXXXX4", "kn"),
+            ("+91XXXXXXXXX5", "kn"),
+            ("+1XXXXXXXXXX6", "en"),
+        ]:
+            database.open_service_window(phone)
+        print("Opened 6 service windows (advisory demo).")
 
     finally:
         conn.close()

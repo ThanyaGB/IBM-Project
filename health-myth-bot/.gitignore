@@ -1,8 +1,30 @@
+# ── Secrets & environment ─────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ── Runtime state (recreated when the app runs; never source) ─────────
+# db lives in data/ now, cards/audio are generated per reply, .run/ holds the
+# cloudflared tunnel URL, logs/ and streamlit_*.log are just that.
 *.db
 *.sqlite3
-.chroma/
+logs/
+.run/
+static/cards/
+static/audio/
+streamlit_*.log
 .freebuff/
-static/
+../.freebuff
+.pytest_cache/
+
+
+# Removed from the repo: chroma_db/ (the vector store is gone — retrieval.py
+# is in-process) and cloudflared.exe (a 53 MB per-machine download, not
+# something to clone — get it from
+# https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/).
+# They were untracked once with:  git rm --cached -r chroma_db cloudflared.exe
+chroma_db/
+cloudflared.exe
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

@@ -8,26 +8,28 @@
     /* ── Reset & base ──────────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    /* Dark theme. The phone emulator below deliberately keeps its own light
+       WhatsApp colours — it must look like the real thing. */
     :root {
-      --teal:         #1a7f7a;
-      --teal-dark:    #145f5b;
-      --deep-blue:    #1a3a5c;
-      --off-white:    #f5f7f9;
-      --surface:      #ffffff;
-      --border:       #d0d7de;
-      --text-dark:    #1f2328;
-      --text-muted:   #57606a;
-      --emergency:    #c0392b;
-      --amber:        #e67e22;
-      --green:        #27ae60;
-      --myth-bg:      #fdf3f3;
-      --myth-border:  #e8b4b4;
-      --fact-bg:      #f0faf4;
-      --fact-border:  #a8d8b9;
+      --teal:         #2fb3a9;
+      --teal-dark:    #1a7f7a;
+      --deep-blue:    #0f1a2b;   /* page background */
+      --panel:        #16233a;   /* raised panels: hero end, trust strip */
+      --off-white:    #0b1220;   /* deepest alt-section background */
+      --surface:      #131f33;   /* card / nav surface */
+      --border:       #263650;
+      --text-dark:    #e3eaf4;   /* primary text (light on dark) */
+      --text-muted:   #93a3ba;
+      --emergency:    #e07b6d;
+      --amber:        #e6a23c;
+      --green:        #2ecc71;
+      --myth-red:     #c0392b;   /* solid myth block */
+      --fact-green:   #1e8449;   /* solid fact block */
+      --src-blue:     #1f6fb2;   /* solid source block */
       --radius:       8px;
       --radius-lg:    14px;
-      --shadow-sm:    0 1px 4px rgba(0,0,0,0.08);
-      --shadow:       0 4px 16px rgba(0,0,0,0.10);
+      --shadow-sm:    0 1px 4px rgba(0,0,0,0.35);
+      --shadow:       0 4px 16px rgba(0,0,0,0.45);
     }
 
     html { scroll-behavior: smooth; }
@@ -37,7 +39,7 @@
       font-size: 16px;
       line-height: 1.65;
       color: var(--text-dark);
-      background: var(--off-white);
+      background: var(--deep-blue);
     }
 
     a { color: var(--teal); text-decoration: none; }
@@ -68,7 +70,7 @@
     .section-title {
       font-size: 28px;
       font-weight: 700;
-      color: var(--deep-blue);
+      color: var(--text-dark);
       margin-bottom: 14px;
       line-height: 1.25;
     }
@@ -99,7 +101,7 @@
     .nav-logo {
       font-size: 18px;
       font-weight: 700;
-      color: var(--deep-blue);
+      color: var(--text-dark);
       display: flex;
       align-items: center;
       gap: 8px;
@@ -136,7 +138,7 @@
       display: block;
       width: 22px;
       height: 2px;
-      background: var(--deep-blue);
+      background: var(--text-dark);
       border-radius: 2px;
       transition: all 0.25s;
     }
@@ -146,7 +148,7 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(26,58,92,0.95);
+      background: rgba(10,17,32,0.96);
       z-index: 200;
       flex-direction: column;
       align-items: center;
@@ -191,20 +193,20 @@
 
     .btn-primary {
       background: var(--teal);
-      color: white;
+      color: #06121f;
     }
-    .btn-primary:hover { background: var(--teal-dark); }
+    .btn-primary:hover { background: #3cc4ba; }
 
     .btn-outline {
       background: transparent;
       color: var(--teal);
       border: 2px solid var(--teal);
     }
-    .btn-outline:hover { background: var(--teal); color: white; }
+    .btn-outline:hover { background: var(--teal); color: #06121f; }
 
     /* ── Hero ─────────────────────────────────────────────────────────────── */
     .hero {
-      background: linear-gradient(160deg, var(--deep-blue) 0%, #1a5c58 100%);
+      background: linear-gradient(160deg, #0d1626 0%, #14544f 100%);
       color: white;
       padding: 100px 0 80px;
       text-align: center;
@@ -257,7 +259,84 @@
       fill: white;
     }
 
+    /* Hero stat strip */
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 36px;
+    }
+    .hero-stat {
+      padding: 0 26px;
+      border-left: 1px solid rgba(255,255,255,0.18);
+    }
+    .hero-stat:first-child { border-left: none; }
+    .hero-stat strong {
+      display: block;
+      font-size: 24px;
+      font-weight: 800;
+      color: #7ae8e3;
+      line-height: 1.2;
+    }
+    .hero-stat span {
+      font-size: 12.5px;
+      color: rgba(255,255,255,0.62);
+    }
+
     /* ── How it works ─────────────────────────────────────────────────────── */
+    /* ── Why this matters — big stats ───────────────────────────────────── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 40px;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 26px 24px;
+    }
+
+    .stat-number {
+      font-size: clamp(28px, 3.6vw, 36px);
+      font-weight: 800;
+      line-height: 1.1;
+      color: var(--teal);
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: var(--text-dark);
+      line-height: 1.55;
+    }
+
+    .stat-source {
+      font-size: 11.5px;
+      font-style: italic;
+      color: var(--text-muted);
+      margin-top: 10px;
+    }
+
+    .stakes-callout {
+      margin-top: 28px;
+      background: rgba(230,162,60,0.10);
+      border: 1.5px solid rgba(230,162,60,0.40);
+      border-left: 5px solid var(--amber);
+      border-radius: var(--radius);
+      padding: 18px 22px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .stakes-callout .ec-icon { font-size: 24px; flex-shrink: 0; }
+    .stakes-callout .ec-text { font-size: 14px; color: rgba(255,255,255,0.85); line-height: 1.55; }
+    .stakes-callout strong { color: white; }
+
     #how-it-works {
       background: var(--surface);
     }
@@ -270,7 +349,7 @@
     }
 
     .step-card {
-      background: var(--off-white);
+      background: var(--deep-blue);
       border-radius: var(--radius-lg);
       padding: 28px 22px;
       text-align: center;
@@ -302,7 +381,7 @@
       height: 24px;
       border-radius: 50%;
       background: var(--teal);
-      color: white;
+      color: #06121f;
       font-size: 12px;
       font-weight: 700;
       line-height: 24px;
@@ -313,7 +392,7 @@
     .step-title {
       font-size: 15px;
       font-weight: 700;
-      color: var(--deep-blue);
+      color: var(--text-dark);
       margin-bottom: 6px;
     }
 
@@ -323,7 +402,7 @@
       line-height: 1.55;
     }
 
-    /* ── Myth examples ───────────────────────────────────────────────────── */
+    /* ── Myth examples — solid red / green / blue blocks ─────────────────── */
     #examples {
       background: var(--off-white);
     }
@@ -336,24 +415,40 @@
     }
 
     .myth-card {
-      background: var(--surface);
+      background: transparent;
       border-radius: var(--radius-lg);
-      overflow: hidden;
-      box-shadow: var(--shadow-sm);
       border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
     }
 
     .myth-half {
-      padding: 22px 20px;
+      padding: 16px 18px;
     }
 
+    /* Tinted panels with solid-colour outlines — the block colours read as
+       borders and translucent washes rather than solid fills. */
     .myth-half.myth {
-      background: var(--myth-bg);
-      border-bottom: 1px solid var(--myth-border);
+      background: rgba(192,57,43,0.10);
+      border: 2px solid var(--myth-red);
+      border-radius: 10px;
+      margin: 14px 14px 0;
     }
 
     .myth-half.fact {
-      background: var(--fact-bg);
+      background: rgba(30,132,73,0.10);
+      border: 2px solid var(--fact-green);
+      border-radius: 10px;
+      margin: 10px 14px 0;
+      flex: 1;
+    }
+
+    .myth-half.source {
+      background: rgba(31,111,178,0.10);
+      border: 2px solid var(--src-blue);
+      border-radius: 10px;
+      padding: 10px 16px;
+      margin: 10px 14px 14px;
     }
 
     .myth-badge {
@@ -370,37 +465,33 @@
     }
 
     .myth-badge.myth {
-      background: rgba(192,57,43,0.12);
-      color: var(--emergency);
-      border: 1px solid var(--myth-border);
+      background: rgba(192,57,43,0.22);
+      color: #ff9d8f;
+      border: 1px solid rgba(224,123,109,0.55);
     }
 
     .myth-badge.fact {
-      background: rgba(39,174,96,0.12);
-      color: var(--green);
-      border: 1px solid var(--fact-border);
+      background: rgba(30,132,73,0.22);
+      color: #7ee2a8;
+      border: 1px solid rgba(126,226,168,0.50);
     }
 
     .myth-text {
       font-size: 14px;
       line-height: 1.55;
+      color: var(--text-dark);
     }
 
     .myth-half.myth .myth-text {
-      color: #7a3030;
       text-decoration: line-through;
-      text-decoration-color: rgba(192,57,43,0.4);
-    }
-
-    .myth-half.fact .myth-text {
-      color: #1a4a2e;
+      text-decoration-color: rgba(224,123,109,0.60);
     }
 
     .myth-source {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-top: 8px;
+      font-size: 11.5px;
+      color: #9ec7ea;
       font-style: italic;
+      margin: 0;
     }
 
     /* ── Languages ───────────────────────────────────────────────────────── */
@@ -425,7 +516,7 @@
       font-size: 15px;
       font-weight: 600;
       color: var(--teal);
-      background: rgba(26,127,122,0.06);
+      background: rgba(47,179,169,0.08);
     }
 
     .lang-flag { font-size: 20px; }
@@ -441,7 +532,7 @@
 
     /* ── Trust / Safety strip ────────────────────────────────────────────── */
     #trust {
-      background: var(--deep-blue);
+      background: var(--panel);
       color: white;
     }
 
@@ -457,7 +548,7 @@
     }
 
     .trust-item {
-      background: rgba(255,255,255,0.07);
+      background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.12);
       border-radius: var(--radius-lg);
       padding: 28px 22px;
@@ -484,7 +575,7 @@
     .emergency-callout {
       margin-top: 32px;
       background: rgba(192,57,43,0.18);
-      border: 1.5px solid rgba(192,57,43,0.45);
+      border: 1.5px solid rgba(224,123,109,0.45);
       border-left: 5px solid var(--emergency);
       border-radius: var(--radius);
       padding: 18px 22px;
@@ -499,7 +590,7 @@
 
     /* ── Footer ──────────────────────────────────────────────────────────── */
     footer {
-      background: #0f2035;
+      background: #0a1120;
       color: rgba(255,255,255,0.55);
       padding: 40px 0;
     }
@@ -542,10 +633,10 @@
       color: white;
     }
 
-    .badge-twilio   { background: #f22f46; }
+    .badge-ibmbob   { background: #0062ff; }
+    .badge-twilio   { background: #25d366; }
     .badge-gemini   { background: #4285f4; }
     .badge-chroma   { background: #7c3aed; }
-    .badge-ibmbob   { background: #0062ff; }
     .badge-flask    { background: #1a7f7a; }
     .badge-whisper  { background: #19a583; }
 
@@ -555,6 +646,8 @@
       .step-card::after { display: none; }
       .myth-cards-grid { grid-template-columns: 1fr; }
       .trust-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero-stat { padding: 0 16px; }
     }
 
     @media (max-width: 600px) {
@@ -565,6 +658,9 @@
       .section-title { font-size: 24px; }
       .steps-grid { grid-template-columns: 1fr; }
       .footer-inner { flex-direction: column; align-items: flex-start; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .hero-stats { flex-direction: column; gap: 16px; }
+      .hero-stat { border-left: none; padding: 0; }
     }
   </style>
 </head>
@@ -573,7 +669,9 @@
 <!-- ── Mobile Nav Overlay ─────────────────────────────────────────────────── -->
 <div class="mobile-nav" id="mobileNav">
   <button class="close-btn" id="closeNav" aria-label="Close menu">✕</button>
+  <a href="#why" onclick="closeMobileNav()">Why it matters</a>
   <a href="#how-it-works" onclick="closeMobileNav()">How it works</a>
+  <a href="/demo" onclick="closeMobileNav()">Live demo</a>
   <a href="#examples" onclick="closeMobileNav()">Myth Examples</a>
   <a href="#languages" onclick="closeMobileNav()">Languages</a>
   <a href="#trust" onclick="closeMobileNav()">Safety & Trust</a>
@@ -586,7 +684,9 @@
       🏥 Health <span>Myth-Bot</span>
     </div>
     <ul class="nav-links">
+      <li><a href="#why">Why it matters</a></li>
       <li><a href="#how-it-works">How it works</a></li>
+      <li><a href="/demo">Live demo</a></li>
       <li><a href="#examples">Myth Examples</a></li>
       <li><a href="#languages">Languages</a></li>
       <li><a href="#trust">Safety & Trust</a></li>
@@ -600,13 +700,14 @@
 <!-- ── Hero ───────────────────────────────────────────────────────────────── -->
 <section class="hero">
   <div class="container">
-    <p class="hero-eyebrow">IBM Hackathon 2025 · Public Health AI</p>
+    <p class="hero-eyebrow">IBM Hackathon 2026 · Public Health AI</p>
     <h1 class="hero-title">
       Fight health myths<br>
       in <span class="accent">any language</span>, on WhatsApp
     </h1>
     <p class="hero-sub">
-      Community members ask health questions in English, Hindi, or Swahili.
+      Community members ask health questions in English, Hindi, or Kannada —
+typed or romanised, by text or voice note.
       Health Myth-Bot responds with verified, empathetic answers — backed by
       WHO and Ministry of Health guidance — in seconds.
     </p>
@@ -617,9 +718,79 @@
         </svg>
         Try it on WhatsApp
       </a>
-      <a href="#how-it-works" class="btn btn-outline" style="color:rgba(255,255,255,0.85);border-color:rgba(255,255,255,0.4);">
-        See how it works
+      <a href="/demo" class="btn btn-outline" style="color:rgba(255,255,255,0.85);border-color:rgba(255,255,255,0.4);">
+        Try the live demo
       </a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <strong>615M</strong>
+        <span>Indians on WhatsApp — its largest market in the world</span>
+      </div>
+      <div class="hero-stat">
+        <strong>68%</strong>
+        <span>of India's digital population is already there</span>
+      </div>
+      <div class="hero-stat">
+        <strong>9 in 10</strong>
+        <span>internet users online every single day</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Why this matters ───────────────────────────────────────────────────── -->
+<section class="section" id="why">
+  <div class="container">
+    <p class="section-label">Why this matters</p>
+    <h2 class="section-title">Myths spread faster than clinics can answer</h2>
+    <p class="section-sub">
+      India already asks its health questions on WhatsApp — and too often the first answer
+      comes from a rumour, not a clinician. The numbers behind Health Myth-Bot:
+    </p>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">60%+</div>
+        <p class="stat-label">of Indian internet users have encountered fake news on WhatsApp.</p>
+        <p class="stat-source">IAMAI-cited surveys</p>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">~200M</div>
+        <p class="stat-label">Indian adults were unsure about or refused a COVID-19 vaccine — 37% of adults in a national study, likely an undercount of the true figure.</p>
+        <p class="stat-source">COVID-era national study</p>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">92% → 43%</div>
+        <p class="stat-label">Mumbai's first-dose measles coverage collapsed in a recent outbreak year — one viral myth wave can undo years of progress.</p>
+        <p class="stat-source">Reported outbreak-year coverage data</p>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">61.9%</div>
+        <p class="stat-label">of Indians take antibiotics for the common cold without any medical advice — fuelling antimicrobial resistance.</p>
+        <p class="stat-source">2025 nationwide survey</p>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">1 : 1,000–1,500</div>
+        <p class="stat-label">people per ASHA community health worker. Dedicated humans, impossible scale — the bot is built as their force multiplier, not their replacement.</p>
+        <p class="stat-source">ASHA workforce studies</p>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">43%</div>
+        <p class="stat-label">of rural households have internet access. No app downloads, no portals — the answers must live on the one app people already have.</p>
+        <p class="stat-source">NFHS-5</p>
+      </div>
+    </div>
+
+    <div class="stakes-callout">
+      <div class="ec-icon">⚠️</div>
+      <div class="ec-text">
+        <strong>This isn't hypothetical.</strong>
+        During COVID, a viral WhatsApp video claiming lemon juice in the nose cures COVID-19 was widely believed and shared.
+        In 2018, WhatsApp hoaxes were linked to mob violence that killed at least 20 people.
+        The response has to be instant, sourced, and always on — exactly where the myths spread.
+      </div>
     </div>
   </div>
 </section>
@@ -636,7 +807,7 @@
         <span class="step-number">1</span>
         <span class="step-icon">💬</span>
         <div class="step-title">Ask in your language</div>
-        <p class="step-desc">Send any health question in English, Hindi, or Swahili — by text or voice note.</p>
+        <p class="step-desc">Send any health question in English, Hindi, or Kannada — by text or voice note.</p>
       </div>
       <div class="step-card">
         <span class="step-number">2</span>
@@ -678,6 +849,8 @@
         <div class="myth-half fact">
           <span class="myth-badge fact">✓ Verified Fact</span>
           <p class="myth-text">The MMR vaccine does not cause autism. The 1998 claim was retracted due to fraud. Dozens of studies involving millions of children confirm there is no link.</p>
+        </div>
+        <div class="myth-half source">
           <p class="myth-source">📚 WHO Vaccine Safety Advisory Committee; CDC Vaccine Safety Datalink</p>
         </div>
       </div>
@@ -691,6 +864,8 @@
         <div class="myth-half fact">
           <span class="myth-badge fact">✓ Verified Fact</span>
           <p class="myth-text">Antibiotics only work on bacteria — not viruses. Stopping early encourages drug-resistant bacteria. Always complete the full course as prescribed.</p>
+        </div>
+        <div class="myth-half source">
           <p class="myth-source">📚 WHO Global Action Plan on Antimicrobial Resistance</p>
         </div>
       </div>
@@ -704,6 +879,8 @@
         <div class="myth-half fact">
           <span class="myth-badge fact">✓ Verified Fact</span>
           <p class="myth-text">Heavy wrapping traps heat and can dangerously raise temperature. Keep the child lightly dressed, offer fluids, and use paracetamol at the correct dose.</p>
+        </div>
+        <div class="myth-half source">
           <p class="myth-source">📚 WHO Integrated Management of Childhood Illness (IMCI)</p>
         </div>
       </div>
@@ -732,8 +909,8 @@
         हिन्दी (Hindi)
       </div>
       <div class="lang-pill">
-        <span class="lang-flag">🇰🇪</span>
-        Kiswahili (Swahili)
+        <span class="lang-flag">🇮🇳</span>
+        ಕನ್ನಡ (Kannada)
       </div>
       <div class="lang-more">
         + More languages extensible via health_facts.json
@@ -741,8 +918,11 @@
     </div>
 
     <p style="margin-top:24px;font-size:14px;color:var(--text-muted);">
-      Voice notes are transcribed via OpenAI Whisper, enabling community members
+      Voice notes are transcribed locally with faster-whisper, enabling community members
       who prefer speaking to typing to access the same verified information.
+      With only 25% of rural India digitally literate and just 33% of rural women on mobile
+      internet (NFHS-5), every design choice keeps the barrier as low as possible — no app
+      download, no forms, no literacy assumptions.
     </p>
   </div>
 </section>
@@ -761,7 +941,7 @@
       <div class="trust-item">
         <div class="trust-icon">📖</div>
         <div class="trust-title">WHO &amp; Ministry of Health sourced</div>
-        <p class="trust-desc">Every fact in the database is drawn from verified WHO guidelines, national health programme documentation, and peer-reviewed public health literature.</p>
+        <p class="trust-desc">Every fact in the database is drawn from verified WHO guidelines, national health programme documentation, and peer-reviewed public health literature. Peer-reviewed research found a false message carrying a “source” is marked true 6× more often — so every answer shows its real, verifiable citation.</p>
       </div>
       <div class="trust-item">
         <div class="trust-icon">🔒</div>
@@ -773,6 +953,17 @@
         <div class="trust-title">Real-time public health signal</div>
         <p class="trust-desc">The analytics dashboard surfaces emerging myth topics to public health officials before they spread — acting as an early-warning system for health misinformation.</p>
       </div>
+    </div>
+
+    <div class="trust-item" style="margin-top:32px;">
+      <div class="trust-icon">📊</div>
+      <div class="trust-title">For public health officials</div>
+      <p class="trust-desc">
+        The live analytics dashboard shows query volumes, trending rumour spikes,
+        emergency flags and the myth review queue — open it alongside the demo
+        and watch activity arrive in real time.
+      </p>
+      <a class="btn btn-primary btn-sm" id="demoDashboardLink" href="http://localhost:8501" target="_blank" rel="noopener" style="margin-top:14px;">Open live dashboard ↗</a>
     </div>
 
     <div class="emergency-callout">
@@ -794,40 +985,37 @@
     <div>
       <div class="footer-brand">🏥 Health <span>Myth-Bot</span></div>
       <div class="footer-meta" style="margin-top:8px;">
-        IBM Hackathon 2025 submission.<br>
+        IBM Hackathon 2026 submission.<br>
         Built with care for communities where health misinformation costs lives.
       </div>
     </div>
     <div>
       <div style="font-size:12px;color:rgba(255,255,255,0.40);margin-bottom:8px;">POWERED BY</div>
       <div class="badges">
-        <span class="badge badge-twilio">Twilio</span>
-        <span class="badge badge-gemini">Gemini</span>
-        <span class="badge badge-chroma">ChromaDB</span>
-        <span class="badge badge-whisper">Whisper</span>
-        <span class="badge badge-flask">Flask</span>
         <span class="badge badge-ibmbob">IBM Bob</span>
+        <span class="badge badge-twilio">WhatsApp Cloud API</span>
+        <span class="badge badge-gemini">Gemini</span>
+        <span class="badge badge-chroma">Local Retrieval</span>
+        <span class="badge badge-whisper">faster-whisper</span>
+        <span class="badge badge-flask">Flask</span>
       </div>
     </div>
   </div>
 </footer>
 
-<!-- ── Minimal JS for mobile nav toggle only ─────────────────────────────── -->
+
+<!-- ── Dashboard link follows the server's config ────────────────────────── -->
 <script>
-  var ham = document.getElementById('hamburger');
-  var mNav = document.getElementById('mobileNav');
-  var closeBtn = document.getElementById('closeNav');
-
-  ham.addEventListener('click', function () {
-    mNav.classList.add('open');
-  });
-  closeBtn.addEventListener('click', function () {
-    mNav.classList.remove('open');
-  });
-
-  function closeMobileNav() {
-    mNav.classList.remove('open');
-  }
+  (function () {
+    var link = document.getElementById('demoDashboardLink');
+    if (!link) return;
+    fetch('/demo/config')
+      .then(function (r) { return r.json(); })
+      .then(function (cfg) {
+        if (cfg && cfg.dashboard_url) link.href = cfg.dashboard_url;
+      })
+      .catch(function () { /* keep the default href */ });
+  })();
 </script>
 
 </body>

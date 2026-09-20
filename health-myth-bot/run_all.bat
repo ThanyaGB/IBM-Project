@@ -7,13 +7,19 @@ rem   2. Reads FLASK_PORT from .env (default 5000)
 rem   3. Seeds the SQLite database (idempotent)
 rem   4. Flask webhook server in a separate window
 rem   5. Streamlit dashboard in a separate window
-rem   6. Cloudflare tunnel so Twilio can reach the local Flask port
+rem   6. Cloudflare tunnel so WhatsApp Cloud API can reach the local Flask port
 rem
 rem Prerequisites:
 rem   * Run from the health-myth-bot folder.
-rem   * cloudflared.exe exists next to this file.
-rem   * .env contains TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, GEMINI_API_KEY,
-rem     OPENAI_API_KEY, or the same values are set as environment variables.
+rem   * .env contains WHATSAPP_ACCESS_TOKEN, WHATSAPP_PHONE_NUMBER_ID,
+rem     WHATSAPP_APP_SECRET, WHATSAPP_VERIFY_TOKEN and either GEMINI_API_KEY
+rem     (free tier) or OLLAMA_BASE_URL (local, free) - or the same values are
+rem     set as environment variables. No paid credential is needed.
+rem   * A tunnel binary for step 6. cloudflared is no longer shipped in the
+rem     repo (53 MB per machine); download it from
+rem     https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/
+rem     and put cloudflared.exe next to this file, or skip step 6 and use any
+rem     other tunnel. The rest of the stack runs without it.
 rem
 rem Usage:
 rem   run_all.bat
@@ -82,25 +88,27 @@ echo.
 echo ========================================
 echo   Starting Cloudflare Tunnel...
 echo   watch for the trycloudflare.com URL below.
-echo   copy it and append /webhook for Twilio.
+echo   copy it and append /webhook in Meta app dashboard > WhatsApp > Configuration.
 echo ========================================
 echo.
 
 set "CFDIR=%~dp0"
 set "CFEXE=%CFDIR%cloudflared.exe"
 if not exist "%CFEXE%" (
-    echo cloudflared.exe not found in project folder. Run from the health-myth-bot directory.
+    echo cloudflared.exe not found next to this file.
+    echo Download it, or start Flask and the dashboard manually without a tunnel.
     exit /b 1
 )
 
 echo   running: %CFEXE% tunnel --url http://localhost:%FLASK_PORT%
 echo.
 echo +-----------------------------------------------------------------+
-echo | YOUR WEBHOOK URL WILL APPEAR BELOW (HTTPS://...TRYCLOUDFLARE.COM) |
-echo | APPEND  /WEBHOOK  AND PASTE IT INTO THE TWILIO CONSOLE.          |
-echo |                                                                 |
-echo | DASHBOARD: HTTP://LOCALHOST:8501                                 |
-echo | FLASK API:  HTTP://LOCALHOST:%FLASK_PORT%/HEALTH                 |
+echo ^| YOUR WEBHOOK URL WILL APPEAR BELOW (HTTPS://...TRYCLOUDFLARE.COM) ^|
+echo ^| APPEND /WEBHOOK AND PASTE IT INTO THE META WHATSAPP CONFIG.      ^|
+echo ^|                                                                 ^|
+echo ^| VERIFY TOKEN MUST MATCH WHATSAPP_VERIFY_TOKEN IN .ENV             ^|
+echo ^| DASHBOARD: HTTP://LOCALHOST:8501                                 ^|
+echo ^| FLASK API:  HTTP://LOCALHOST:%FLASK_PORT%/HEALTH                 ^|
 echo +-----------------------------------------------------------------+
 echo.
 

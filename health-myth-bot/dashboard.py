@@ -32,8 +32,13 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-import database  # noqa: E402
-from alerting import detect_rumor_spike  # noqa: E402
+from bot import database  # noqa: E402
+from bot import advisory  # noqa: E402
+from bot import card_renderer  # noqa: E402
+from bot import rag_engine  # noqa: E402
+from bot import retrieval  # noqa: E402
+from bot import tts  # noqa: E402
+from bot.alerting import detect_rumor_spike  # noqa: E402
 
 # ---------------------------------------------------------------------------
 # Page config — must be the very first Streamlit call
@@ -258,6 +263,20 @@ _LOGIN_CSS = f"""
 """
 
 
+# Language codes → display names.  Kannada replaced Swahili, so an old Swahili
+# row in a demo database still renders rather than showing a bare "sw".
+LANG_LABELS = {
+    "en": "English",
+    "hi": "Hindi",
+    "kn": "Kannada",
+    "sw": "Swahili (legacy)",
+}
+
+
+def _lang_label(code: str) -> str:
+    return LANG_LABELS.get(code, code)
+
+
 def _check_auth() -> bool:
     if not DASHBOARD_PASSWORD:
         return True  # no password configured — open access
@@ -350,6 +369,74 @@ def _load_data():
     return stats, logs, alerts, flagged
 
 
+def _system_status() -> dict:
+    """What is configured, degraded, or disabled — the same honesty as /health."""
+    try:
+        retrieval_stats = retrieval.get_retriever().stats()
+    except Exception as exc:  # pylint: disable=broad-except
+        retrieval_stats = {"error": str(exc)}
+
+    generation = rag_engine.status()
+    cards = card_renderer.renderer_status()
+    voice = tts.status()
+    return {
+        "bot_enabled": database.bot_enabled(),
+        "retrieval": retrieval_stats,
+        "generation_backends": {
+            "gemini": generation["gemini_configured"],
+            "ollama": generation["ollama_configured"],
+        },
+        "cards_shape_indic_correctly": cards["shapes_indic_correctly"],
+        "card_renderer": cards["renderer"],
+        "voice_replies_available": voice["available"],
+        "pending_myth_reviews": database.count_flagged_myths("pending"),
+        "users_in_24h_window": len(database.fetch_users_in_window()),
+    }
+
+
+def _render_operations(active_spikes: list) -> None:
+    """Kill switch, status, and the advisory dispatch control."""
+    with st.expander("⚙️ Operations — bot controls, status, advisories"):
+        ops_left, ops_right = st.columns([1, 1])
+
+        with ops_left:
+            enabled = database.bot_enabled()
+            st.markdown(
+                f"**Bot is {'🟢 running' if enabled else '🔴 paused'}**"
+            )
+            if st.button("🔴 Pause bot" if enabled else "🟢 Resume bot"):
+                database.set_bot_enabled(not enabled)
+                st.rerun()
+            st.caption(
+                "Pausing is checked before every LLM call, so it stops replies "
+                "and spend immediately — it is not just a display flag."
+            )
+
+            st.markdown("**Advisory dispatch**")
+            default_category = active_spikes[0]["category"] if active_spikes else ""
+            category = st.text_input(
+                "Category", value=default_category, key="advisory_category"
+            )
+            dry_run = st.checkbox(
+                "Dry run (count recipients, send nothing)", value=True
+            )
+            if st.button("📣 Dispatch advisory") and category.strip():
+                st.session_state["advisory_result"] = advisory.dispatch(
+                    category.strip(), dry_run=dry_run, force=True
+                )
+            if "advisory_result" in st.session_state:
+                st.json(st.session_state["advisory_result"])
+            st.caption(
+                "Only users inside their 24-hour reply window receive this. "
+                "Outside that window Meta charges per template message, so those "
+                "users are skipped and counted — the bot cannot spend money here."
+            )
+
+        with ops_right:
+            st.markdown("**System status**")
+            st.json(_system_status())
+
+
 # ---------------------------------------------------------------------------
 # Main dashboard render
 # ---------------------------------------------------------------------------
@@ -392,11 +479,12 @@ def render_dashboard():
         st.markdown(
             f"<div class='rumor-alert'>"
             f"<h4>⚠️ Emerging Rumour Spike Detected</h4>"
-            f"<p>Unusual query volume in: {spike_text}. "
-            "Consider issuing a public health advisory.</p>"
+            f"<p>Unusual query volume in: {spike_text}. "                "Consider issuing a public health advisory.</p>"
             "</div>",
             unsafe_allow_html=True,
         )
+
+    _render_operations(active_spikes)
 
     # ── Metric cards ────────────────────────────────────────────────────────
     st.markdown("<div class='section-header'>Overview</div>", unsafe_allow_html=True)
@@ -455,16 +543,14 @@ def render_dashboard():
         ch1, ch2 = st.columns(2)
 
         with ch1:
+            lang_labels = LANG_LABELS
             lang_counts = (
                 df["language"]
                 .value_counts()
                 .rename_axis("Language")
                 .reset_index(name="Queries")
             )
-            lang_labels = {"en": "English", "hi": "Hindi", "sw": "Swahili"}
-            lang_counts["Language"] = lang_counts["Language"].map(
-                lambda x: lang_labels.get(x, x)
-            )
+            lang_counts["Language"] = lang_counts["Language"].map(_lang_label)
             fig_pie = px.pie(
                 lang_counts,
                 names="Language",
@@ -538,7 +624,7 @@ def render_dashboard():
                 "Filter by language",
                 options=all_langs,
                 default=all_langs,
-                format_func=lambda x: {"en": "English", "hi": "Hindi", "sw": "Swahili"}.get(x, x),
+                format_func=_lang_label,
             )
         with f2:
             sel_cats = st.multiselect(
@@ -564,9 +650,9 @@ def render_dashboard():
             lambda v: "🚨 Emergency" if v else ""
         )
         display_df["When"] = display_df["timestamp"].apply(_relative_time)
-        display_df["Language"] = display_df["language"].map(
-            {"en": "English", "hi": "Hindi", "sw": "Swahili"}
-        ).fillna(display_df["language"])
+        display_df["Language"] = display_df["language"].map(_lang_label).fillna(
+            display_df["language"]
+        )
 
         display_cols = {
             "anonymized_hash": "User Hash",
@@ -608,23 +694,49 @@ def render_dashboard():
         st.info("No query data yet. Run `python seed_data.py` to populate sample data.")
 
     # ── Flagged myths review queue (stretch 4.5) ────────────────────────────
+    st.markdown(
+        "<div class='section-header'>🔍 Flagged Myths — Review Queue</div>",
+        unsafe_allow_html=True,
+    )
     if flagged:
-        st.markdown(
-            "<div class='section-header'>🔍 Flagged Myths — Pending Review</div>",
-            unsafe_allow_html=True,
+        for row in flagged:
+            title = f"#{row['id']} · {_lang_label(row['language'])} · {row['query_text'][:70]}"
+            with st.expander(title):
+                st.write(row["query_text"])
+                st.caption(f"Reported {_relative_time(row['timestamp'])}")
+                note = st.text_input("Review note", key=f"review_note_{row['id']}")
+                approve_col, reject_col = st.columns(2)
+                if approve_col.button("✅ Approve", key=f"approve_{row['id']}"):
+                    database.resolve_flagged_myth(row["id"], "approved", note or None)
+                    st.success(f"Flag #{row['id']} marked approved.")
+                    st.rerun()
+                if reject_col.button("❌ Reject", key=f"reject_{row['id']}"):
+                    database.resolve_flagged_myth(row["id"], "rejected", note or None)
+                    st.info(f"Flag #{row['id']} marked rejected.")
+                    st.rerun()
+        st.caption(
+            "Approving records that a human vetted the report. It does **not** publish "
+            "health text: adding the fact itself is a reviewed corpus edit made with "
+            "`bot/review_corpus.py`, so a single click can never put unreviewed medical "
+            "wording in front of users."
         )
-        flagged_df = pd.DataFrame(flagged)
-        flagged_df["When"] = flagged_df["timestamp"].apply(_relative_time)
-        st.dataframe(
-            flagged_df[["id", "query_text", "language", "When", "status"]].rename(
-                columns={
-                    "id": "ID", "query_text": "Reported Query",
-                    "language": "Language", "status": "Status",
-                }
-            ),
-            width="stretch",
-            height=220,
-        )
+    else:
+        st.info("No myths waiting for review.")
+
+    # ── Translation review status ──────────────────────────────────────────
+    st.markdown(
+        "<div class='section-header'>🌐 Translation Review Status</div>",
+        unsafe_allow_html=True,
+    )
+    st.dataframe(
+        pd.DataFrame(rag_engine.translation_report()), width="stretch", height=240
+    )
+    st.caption(
+        "`draft` means a machine-assisted translation that no human has read. "
+        "Drafts are never shown to users — the English source is used and "
+        "translated at answer time instead. Approve one with: "
+        "`python -m bot.review_corpus approve <id> <lang> --reviewer \"Dr …\"`"
+    )
 
     # ── Footer ───────────────────────────────────────────────────────────────
     st.markdown(

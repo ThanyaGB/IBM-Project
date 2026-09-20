@@ -1,0 +1,56 @@
+name: CI
+
+# Everything here is free to run: no secrets, no paid backends, no network
+# dependency beyond pip. The suite is deliberately offline — the answer
+# backends are unset, so the deterministic fallback and retrieval paths are
+# what gets tested.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    # The repository root is the workspace folder; the project itself lives in
+    # health-myth-bot/, so every run step executes from there.
+    defaults:
+      run:
+        working-directory: health-myth-bot
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: health-myth-bot/requirements.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Byte-compile every module
+        run: python -m compileall -q .
+
+      - name: Run the test suite
+        run: python -m pytest tests -q
+
+      - name: Evaluation gate
+        # Fails the build when retrieval, refusal, language detection or
+        # emergency precision/recall drop below their floors — so a corpus or
+        # keyword change cannot quietly make answers worse.
+        run: python eval/run_eval.py --verbose
+
+      - name: Translation review status
+        # Informational: draft translations are not shown to users, so this
+        # never fails the build, but the count stays visible in the log.
+        run: python -m bot.review_corpus status
