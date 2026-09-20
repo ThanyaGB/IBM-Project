@@ -86,7 +86,7 @@ WhatsApp User
 
 ## Languages
 
-**English, Hindi (हिन्दी) and Kannada (ಕನ್ನಡ)** — Kannada replaced Swahili, which never matched the pilot population.
+**English, Hindi (हिन्दी) and Kannada (ಕನ್ನಡ)**
 
 Two things are handled that the previous implementation was not:
 
